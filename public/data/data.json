@@ -1,0 +1,639 @@
+﻿{
+    "roles": [
+        {
+            "id": "1",
+            "roles": "admin"
+        },
+        {
+            "id": "2",
+            "roles": "mahasiswa"
+        },
+        {
+            "id": "3",
+            "roles": "dosen"
+        },
+        {
+            "id": "4",
+            "roles": "kajur"
+        }
+    ],
+    "admin": [
+        {
+            "id": "1",
+            "nama": "Andi"
+        },
+        {
+            "id": "2",
+            "nama": "Budi"
+        }
+    ],
+    "jurusan": [
+        {
+            "id": "1",
+            "nama_jurusan": "Teknik Elektronika"
+        },
+        {
+            "id": "2",
+            "nama_jurusan": "Teknik Informatika"
+        },
+        {
+            "id": "3",
+            "nama_jurusan": "Teknik Mesin"
+        },
+        {
+            "id": "4",
+            "nama_jurusan": "Teknologi Rekayasa Kimia dan Lingkungan"
+        },
+        {
+            "id": "5",
+            "nama_jurusan": "Teknologi Pertanian dan Perikanan"
+        }
+    ],
+    "prodi": [
+        {
+            "id": "1",
+            "nama_prodi": "D3 Teknik Elektronika",
+            "jurusan_id": "1"
+        },
+        {
+            "id": "2",
+            "nama_prodi": "D3 Teknik Listrik",
+            "jurusan_id": "1"
+        },
+        {
+            "id": "3",
+            "nama_prodi": "D3 Teknik Informatika",
+            "jurusan_id": "2"
+        },
+        {
+            "id": "4",
+            "nama_prodi": "D3 Teknik Mesin",
+            "jurusan_id": "3"
+        },
+        {
+            "id": "5",
+            "nama_prodi": "D2 Teknik Mesin Pertanian",
+            "jurusan_id": "3"
+        },
+        {
+            "id": "6",
+            "nama_prodi": "D2 Teknik Mesin Perikanan",
+            "jurusan_id": "3"
+        },
+        {
+            "id": "7",
+            "nama_prodi": "D4 Teknik Pengendalian Pencemaran Lingkungan",
+            "jurusan_id": "4"
+        },
+        {
+            "id": "8",
+            "nama_prodi": "D4 Teknik Pengembangan Produk Agroindustri",
+            "jurusan_id": "5"
+        }
+    ],
+    "mata_kuliah": [
+        {
+            "id": "1",
+            "nama_mk": "Bahasa Inggris",
+            "sks": "2",
+            "semester": "1",
+            "prodi_id": "3"
+        },
+        {
+            "id": "2",
+            "nama_mk": "Matematika",
+            "sks": "2",
+            "semester": "1",
+            "prodi_id": "3"
+        },
+        {
+            "id": "3",
+            "nama_mk": "Fisika Dasar",
+            "sks": "2",
+            "semester": "1",
+            "prodi_id": "3"
+        },
+        {
+            "id": "4",
+            "nama_mk": "Algoritma dan Pemrograman",
+            "sks": "2",
+            "semester": "1",
+            "prodi_id": "3"
+        },
+        {
+            "id": "5",
+            "nama_mk": "Konsep Teknologi Informasi",
+            "sks": "2",
+            "semester": "1",
+            "prodi_id": "3"
+        },
+        {
+            "id": "6",
+            "nama_mk": "Praktikum Gambar Teknik",
+            "sks": "2",
+            "semester": "1",
+            "prodi_id": "3"
+        },
+        {
+            "id": "7",
+            "nama_mk": "Praktikum Internet",
+            "sks": "2",
+            "semester": "1",
+            "prodi_id": "3"
+        },
+        {
+            "id": "8",
+            "nama_mk": "Praktikum Ketrampilan Komputer",
+            "sks": "2",
+            "semester": "1",
+            "prodi_id": "3"
+        },
+        {
+            "id": "9",
+            "nama_mk": "Praktikum Aplikasi Komputer",
+            "sks": "2",
+            "semester": "1",
+            "prodi_id": "3"
+        },
+        {
+            "id": "10",
+            "nama_mk": "Praktikum Algoritma dan Pemrograman",
+            "sks": "2",
+            "semester": "1",
+            "prodi_id": "3"
+        },
+        {
+            "id": "11",
+            "nama_mk": "Praktek Bahasa Inggris",
+            "sks": "2",
+            "semester": "2",
+            "prodi_id": "3"
+        },
+        {
+            "id": "12",
+            "nama_mk": "Aljabar Linier dan Matriks",
+            "sks": "2",
+            "semester": "2",
+            "prodi_id": "3"
+        },
+        {
+            "id": "13",
+            "nama_mk": "Sistem Digital",
+            "sks": "2",
+            "semester": "2",
+            "prodi_id": "3"
+        },
+        {
+            "id": "14",
+            "nama_mk": "Interaksi Manusia dan Komputer",
+            "sks": "2",
+            "semester": "2",
+            "prodi_id": "3"
+        },
+        {
+            "id": "15",
+            "nama_mk": "Sistem Operasi",
+            "sks": "2",
+            "semester": "2",
+            "prodi_id": "3"
+        },
+        {
+            "id": "16",
+            "nama_mk": "Rekayasa Perangkat Lunak",
+            "sks": "2",
+            "semester": "2",
+            "prodi_id": "3"
+        },
+        {
+            "id": "17",
+            "nama_mk": "Praktikum Pemrograman Berorientasi Objek I",
+            "sks": "2",
+            "semester": "2",
+            "prodi_id": "3"
+        },
+        {
+            "id": "18",
+            "nama_mk": "Praktikum Basis Data",
+            "sks": "2",
+            "semester": "2",
+            "prodi_id": "3"
+        },
+        {
+            "id": "19",
+            "nama_mk": "Praktikum Struktur Data",
+            "sks": "2",
+            "semester": "2",
+            "prodi_id": "3"
+        },
+        {
+            "id": "20",
+            "nama_mk": "Praktikum Sistem Operasi",
+            "sks": "2",
+            "semester": "2",
+            "prodi_id": "3"
+        },
+        {
+            "id": "21",
+            "nama_mk": "Matematika Diskrit",
+            "sks": "2",
+            "semester": "3",
+            "prodi_id": "3"
+        },
+        {
+            "id": "22",
+            "nama_mk": "Sistem Informasi Manajemen",
+            "sks": "2",
+            "semester": "3",
+            "prodi_id": "3"
+        },
+        {
+            "id": "23",
+            "nama_mk": "Jaringan Komputer",
+            "sks": "2",
+            "semester": "3",
+            "prodi_id": "3"
+        },
+        {
+            "id": "24",
+            "nama_mk": "Rekayasa Web",
+            "sks": "2",
+            "semester": "3",
+            "prodi_id": "3"
+        },
+        {
+            "id": "25",
+            "nama_mk": "Sistem Pendukung Keputusan",
+            "sks": "2",
+            "semester": "3",
+            "prodi_id": "3"
+        },
+        {
+            "id": "26",
+            "nama_mk": "Praktikum Pemrograman Berorientasi Objek II",
+            "sks": "2",
+            "semester": "3",
+            "prodi_id": "3"
+        },
+        {
+            "id": "27",
+            "nama_mk": "Praktikum Basis Data Lanjut",
+            "sks": "2",
+            "semester": "3",
+            "prodi_id": "3"
+        },
+        {
+            "id": "28",
+            "nama_mk": "Praktikum Pemrograman Web I",
+            "sks": "2",
+            "semester": "3",
+            "prodi_id": "3"
+        },
+        {
+            "id": "29",
+            "nama_mk": "Praktikum Pemrograman Visual",
+            "sks": "2",
+            "semester": "3",
+            "prodi_id": "3"
+        },
+        {
+            "id": "30",
+            "nama_mk": "Praktikum Rekayasa Perangkat Lunak",
+            "sks": "2",
+            "semester": "3",
+            "prodi_id": "3"
+        },
+        {
+            "id": "31",
+            "nama_mk": "Manajemen Produksi",
+            "sks": "2",
+            "semester": "4",
+            "prodi_id": "3"
+        },
+        {
+            "id": "32",
+            "nama_mk": "Metode Numerik",
+            "sks": "2",
+            "semester": "4",
+            "prodi_id": "3"
+        },
+        {
+            "id": "33",
+            "nama_mk": "Kecerdasan Buatan",
+            "sks": "2",
+            "semester": "4",
+            "prodi_id": "3"
+        },
+        {
+            "id": "34",
+            "nama_mk": "Sistem Informasi Geografis",
+            "sks": "2",
+            "semester": "4",
+            "prodi_id": "3"
+        },
+        {
+            "id": "35",
+            "nama_mk": "Rangkaian Listrik Dasar",
+            "sks": "2",
+            "semester": "4",
+            "prodi_id": "3"
+        },
+        {
+            "id": "36",
+            "nama_mk": "Praktikum Management Internetworking and Security",
+            "sks": "2",
+            "semester": "4",
+            "prodi_id": "3"
+        },
+        {
+            "id": "37",
+            "nama_mk": "Program Profesional",
+            "sks": "2",
+            "semester": "4",
+            "prodi_id": "3"
+        },
+        {
+            "id": "38",
+            "nama_mk": "Praktikum Pemrograman Web II",
+            "sks": "1",
+            "semester": "4",
+            "prodi_id": "3"
+        },
+        {
+            "id": "39",
+            "nama_mk": "Praktikum Multimedia",
+            "sks": "2",
+            "semester": "4",
+            "prodi_id": "3"
+        },
+        {
+            "id": "40",
+            "nama_mk": "Praktikum Jaringan Komputer",
+            "sks": "3",
+            "semester": "4",
+            "prodi_id": "3"
+        },
+        {
+            "id": "41",
+            "nama_mk": "Pendidikan Agama",
+            "sks": "2",
+            "semester": "5",
+            "prodi_id": "3"
+        },
+        {
+            "id": "42",
+            "nama_mk": "Bahasa Indonesia",
+            "sks": "2",
+            "semester": "5",
+            "prodi_id": "3"
+        },
+        {
+            "id": "43",
+            "nama_mk": "Kesehatan Keselamatan Kerja (K3)",
+            "sks": "2",
+            "semester": "5",
+            "prodi_id": "3"
+        },
+        {
+            "id": "44",
+            "nama_mk": "Teknik Supervisi",
+            "sks": "2",
+            "semester": "5",
+            "prodi_id": "3"
+        },
+        {
+            "id": "45",
+            "nama_mk": "Magang Industri",
+            "sks": "10",
+            "semester": "5",
+            "prodi_id": "3"
+        },
+        {
+            "id": "46",
+            "nama_mk": "Kewarganegaraan",
+            "sks": "2",
+            "semester": "6",
+            "prodi_id": "3"
+        },
+        {
+            "id": "47",
+            "nama_mk": "Kewirausahaan",
+            "sks": "2",
+            "semester": "6",
+            "prodi_id": "3"
+        },
+        {
+            "id": "48",
+            "nama_mk": "Statistika",
+            "sks": "2",
+            "semester": "6",
+            "prodi_id": "3"
+        },
+        {
+            "id": "49",
+            "nama_mk": "Etika Profesi",
+            "sks": "2",
+            "semester": "6",
+            "prodi_id": "3"
+        },
+        {
+            "id": "50",
+            "nama_mk": "Knowledge Management",
+            "sks": "2",
+            "semester": "6",
+            "prodi_id": "3"
+        },
+        {
+            "id": "51",
+            "nama_mk": "Praktek Teknik Supervisi",
+            "sks": "2",
+            "semester": "6",
+            "prodi_id": "3"
+        },
+        {
+            "id": "52",
+            "nama_mk": "Tugas Akhir",
+            "sks": "6",
+            "semester": "6",
+            "prodi_id": "3"
+        }
+    ],
+    "kompetensi": [
+        {
+            "id": "1",
+            "aspek_kompetensi": "Keandalan Dosen/ PLP (Reliability)"
+        },
+        {
+            "id": "2",
+            "aspek_kompetensi": "Daya Tanggap Dosen/ PLP(Responsiveness)"
+        },
+        {
+            "id": "3",
+            "aspek_kompetensi": "Kepastian Dosen/ PLP"
+        },
+        {
+            "id": "4",
+            "aspek_kompetensi": "Empati/ Kepedulian"
+        },
+        {
+            "id": "5",
+            "aspek_kompetensi": "Sarana dan Prasarana"
+        }
+    ],
+    "pertanyaan": [
+        {
+            "id": "1",
+            "pertanyaan": "Kemampuan dosen dalam menjelaskan materi perkuliahan",
+            "kompetensi_id": "1"
+        },
+        {
+            "id": "2",
+            "pertanyaan": "Penguasaan materi dan wawasan dosen tentang mata kuliah yang diampu",
+            "kompetensi_id": "1"
+        },
+        {
+            "id": "3",
+            "pertanyaan": "Kemampuan dosen dalam menjawab pertanyaan mahasiswa saat perkuliahaan",
+            "kompetensi_id": "1"
+        },
+        {
+            "id": "4",
+            "pertanyaan": "Semangat dosen dalam memberikan kuliah",
+            "kompetensi_id": "1"
+        },
+        {
+            "id": "5",
+            "pertanyaan": "Kemampuan dosen dalam memberikan motivasi/ membangkitkan minat belajar",
+            "kompetensi_id": "1"
+        },
+        {
+            "id": "6",
+            "pertanyaan": "Dosen menyampaikan perkuliahan secara sistematis (runtut dan jelas)",
+            "kompetensi_id": "1"
+        },
+        {
+            "id": "7",
+            "pertanyaan": "Kemampuan dosen dalam menguasai kelas",
+            "kompetensi_id": "1"
+        },
+        {
+            "id": "8",
+            "pertanyaan": "Dosen selalu mengadakan diskusi dan tanya jawab pada saat perkuliaahan",
+            "kompetensi_id": "2"
+        },
+        {
+            "id": "9",
+            "pertanyaan": "Dosen selalu memberikan soal latihan atau studi kasus pada saat perkuliahan",
+            "kompetensi_id": "2"
+        },
+        {
+            "id": "10",
+            "pertanyaan": "Dosen melakukan pembahasan terhadap ujian/ tugas yang diberikan",
+            "kompetensi_id": "2"
+        },
+        {
+            "id": "11",
+            "pertanyaan": "Dosen selalu menjawab pertanyaan dari mahasiswa",
+            "kompetensi_id": "2"
+        },
+        {
+            "id": "12",
+            "pertanyaan": "Dosen selalu hadir dalam perkuliahan",
+            "kompetensi_id": "3"
+        },
+        {
+            "id": "13",
+            "pertanyaan": "Jika dosen berhalangan hadir dalam perkuliahan, maka dosen mengadakan kuliah pengganti di lain hari",
+            "kompetensi_id": "3"
+        },
+        {
+            "id": "14",
+            "pertanyaan": "Dosen datang tepat waktu dan mengajar sesuai waktu yang dijadwalkan",
+            "kompetensi_id": "3"
+        },
+        {
+            "id": "15",
+            "pertanyaan": "Dosen mengakhiri perkuliahan tepat waktu",
+            "kompetensi_id": "3"
+        },
+        {
+            "id": "16",
+            "pertanyaan": "Ketersediaan materi (dapat berupa handout/ power point/ diktat)",
+            "kompetensi_id": "3"
+        },
+        {
+            "id": "17",
+            "pertanyaan": "Pada awal perkuliahan dosen menyampaikan kemampuan/ kompetensi yang dimiliki mahasiswa setelah mengikuti perkuliahan ini",
+            "kompetensi_id": "3"
+        },
+        {
+            "id": "18",
+            "pertanyaan": "Pada awal perkuliahan dosen menjelaskan tentang rencana materi dan tujuan mata kuliah diberikan (dapat dalam bentuk silabus)",
+            "kompetensi_id": "3"
+        },
+        {
+            "id": "19",
+            "pertanyaan": "Kesesuaian materi yang diberikan dalam perkuliahan dengan rencana materi yang akan diberikan di awal perkuliahan",
+            "kompetensi_id": "3"
+        },
+        {
+            "id": "20",
+            "pertanyaan": "Kesesuaian antara soal evaluasi/ ujian/ kuis, dengan materi yang diberikan",
+            "kompetensi_id": "3"
+        },
+        {
+            "id": "21",
+            "pertanyaan": "Dosen memperlakukan semua mahasiswa dengan baik dan adil",
+            "kompetensi_id": "4"
+        },
+        {
+            "id": "22",
+            "pertanyaan": "Dosen selalu memberikan support untuk mahasiswa",
+            "kompetensi_id": "4"
+        },
+        {
+            "id": "23",
+            "pertanyaan": "Dosen selalu memberikan bantuan kepada mahasiswa dalam menyelesaikan permasalahan mata kuliah",
+            "kompetensi_id": "4"
+        },
+        {
+            "id": "24",
+            "pertanyaan": "Dosen selalu menyediakan waktu untuk mahasiswa konsultasi tentang pembelajaran",
+            "kompetensi_id": "4"
+        },
+        {
+            "id": "25",
+            "pertanyaan": "Kondisi meja dan kursi penunjang perkuliahan",
+            "kompetensi_id": "5"
+        },
+        {
+            "id": "26",
+            "pertanyaan": "Semangat dosen dalam memberikan kuliah",
+            "kompetensi_id": "5"
+        },
+        {
+            "id": "27",
+            "pertanyaan": "Kondisi papan tulis",
+            "kompetensi_id": "5"
+        },
+        {
+            "id": "28",
+            "pertanyaan": "Kondisi proyektor",
+            "kompetensi_id": "5"
+        },
+        {
+            "id": "29",
+            "pertanyaan": "Kondisi kebersihan kelas",
+            "kompetensi_id": "5"
+        },
+        {
+            "id": "30",
+            "pertanyaan": "Kondisi penerangan kelas",
+            "kompetensi_id": "5"
+        },
+        {
+            "id": "31",
+            "pertanyaan": "Kondisi bangunan ruang kelas",
+            "kompetensi_id": "5"
+        }
+    ]
+}
