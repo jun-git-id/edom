@@ -18,6 +18,8 @@ class CreateCoursesTable extends Migration
             $table->string('nama_mk');
             $table->integer('sks');
             $table->char('semester');
+            $table->unsignedBigInteger('prodi_id');
+            $table->foreign('prodi_id')->references('id')->on('study_programs');
             $table->timestamps();
         });
     }

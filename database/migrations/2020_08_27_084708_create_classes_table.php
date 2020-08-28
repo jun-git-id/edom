@@ -16,10 +16,9 @@ class CreateClassesTable extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
             $table->string('huruf');
+            $table->integer('angkatan');
             $table->unsignedBigInteger('prodi_id');
-            $table->unsignedBigInteger('angkatan_id');
             $table->foreign('prodi_id')->references('id')->on('study_programs');
-            $table->foreign('angkatan_id')->references('id')->on('generations');
             $table->timestamps();
         });
     }

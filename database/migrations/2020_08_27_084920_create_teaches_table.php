@@ -18,11 +18,10 @@ class CreateTeachesTable extends Migration
             $table->unsignedBigInteger('dosen_id');
             $table->unsignedBigInteger('kelas_id');
             $table->unsignedBigInteger('mata_kuliah_id');
-            $table->unsignedBigInteger('thn_akademik');
+            $table->integer('tahun');
             $table->foreign('dosen_id')->references('id')->on('lecturers');
             $table->foreign('kelas_id')->references('id')->on('classes');
             $table->foreign('mata_kuliah_id')->references('id')->on('courses');
-            $table->foreign('thn_akademik')->references('id')->on('academic_years');
             $table->timestamps();
         });
     }
