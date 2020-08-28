@@ -8,4 +8,9 @@ class Question extends Model
 {
     //
     protected $guarded = [];
+
+    public function competence()
+    {
+        return $this->belongsTo('App\Competence');
+    }
 }

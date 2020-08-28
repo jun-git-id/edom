@@ -7,4 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Admin extends Model
 {
     protected $guarded = [];
+
+    public function user()
+    {
+        return $this->hasOne('App\User');
+    }
 }
