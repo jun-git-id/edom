@@ -29,7 +29,6 @@ class InsertRole extends Migration
      */
     public function down()
     {
-        DB::table('roles')->delete('1');
-        DB::table('roles')->delete('2');
+        
     }
 }
