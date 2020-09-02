@@ -1,20 +1,20 @@
-﻿{
+{
     "roles": [
         {
             "id": "1",
-            "roles": "admin"
+            "role": "admin"
         },
         {
             "id": "2",
-            "roles": "mahasiswa"
+            "role": "mahasiswa"
         },
         {
             "id": "3",
-            "roles": "dosen"
+            "role": "dosen"
         },
         {
             "id": "4",
-            "roles": "kajur"
+            "role": "kajur"
         }
     ],
     "admin": [

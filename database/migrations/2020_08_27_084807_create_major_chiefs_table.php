@@ -15,12 +15,12 @@ class CreateMajorChiefsTable extends Migration
     {
         Schema::create('major_chiefs', function (Blueprint $table) {
             $table->id();
-            $table->string('nidk');
             $table->string('nama');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('jurusan_id');
+            $table->unsignedBigInteger('dosen_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('jurusan_id')->references('id')->on('majors');
+            $table->foreign('dosen_id')->references('id')->on('lecturers');
+            
             $table->timestamps();
         });
     }

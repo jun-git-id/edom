@@ -11,6 +11,6 @@ class Competence extends Model
 
     public function question()
     {
-        return $this->hasMany('App\Question');
+        return $this->hasMany('App\Question','kompetensi_id');
     }
 }

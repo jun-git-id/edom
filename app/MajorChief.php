@@ -14,8 +14,8 @@ class MajorChief extends Model
         return $this->hasOne('App\User');
     }
 
-    public function major()
+    public function lecturer()
     {
-        return $this->belongsTo('App\Major');
+        return $this->hasOne('App\Lecturer');
     }
 }

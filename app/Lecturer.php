@@ -15,9 +15,9 @@ class Lecturer extends Model
         return $this->hasOne('App\User');
     }
 
-    public function major()
+    public function study_program()
     {
-        return $this->belongsTo('App\Major');
+        return $this->belongsTo('App\StudyProgram');
     }
 
     public function teach()

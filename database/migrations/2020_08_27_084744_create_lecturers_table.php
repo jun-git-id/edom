@@ -20,9 +20,9 @@ class CreateLecturersTable extends Migration
             $table->string('pendidikan');
             $table->string('bidang_ilmu');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('jurusan_id');
+            $table->unsignedBigInteger('prodi_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('jurusan_id')->references('id')->on('majors');
+            $table->foreign('prodi_id')->references('id')->on('study_programs');
             $table->timestamps();
         });
     }

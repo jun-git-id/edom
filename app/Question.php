@@ -8,9 +8,10 @@ class Question extends Model
 {
     //
     protected $guarded = [];
+    protected $table = 'questions';
 
     public function competence()
     {
-        return $this->belongsTo('App\Competence');
+        return $this->belongsTo('App\Competence','kompetensi_id');
     }
 }
