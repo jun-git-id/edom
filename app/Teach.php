@@ -9,23 +9,23 @@ class Teach extends Model
     //
     protected $guarded = [];
 
-    public function classModel()
+    public function class()
     {
-        return $this->belongsTo('App\ClassModel');
+        return $this->belongsTo('App\ClassModel','kelas_id');
     }
 
     public function course()
     {
-        return $this->belongsTo('App\Course');
+        return $this->belongsTo('App\Course','mata_kuliah_id');
     }
 
     public function lecturer()
     {
-        return $this->belongsTo('App\Lecturer');
+        return $this->belongsTo('App\Lecturer','dosen_id');
     }
 
     public function filling()
     {
-        return $this->hasMany('App\Filling');
+        return $this->hasMany('App\Filling','mengajar_id');
     }
 }

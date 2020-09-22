@@ -11,16 +11,16 @@ class ClassModel extends Model
 
     public function studyProgram()
     {
-        return $this->belongsTo('App\StudyProgram');
+        return $this->belongsTo('App\StudyProgram','prodi_id');
     }
 
     public function teach()
     {
-        return $this->hasMany('App\Teach');
+        return $this->hasMany('App\Teach','kelas_id');
     }
 
     public function student()
     {
-        return $this->hasMany('App\Student');
+        return $this->hasMany('App\Student','kelas_id');
     }
 }

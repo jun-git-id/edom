@@ -11,6 +11,6 @@ class FillingDetail extends Model
 
     public function filling()
     {
-        return $this->belongsTo('App\Filling');
+        return $this->belongsTo('App\Filling','pengisian_id');
     }
 }

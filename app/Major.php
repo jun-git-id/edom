@@ -12,7 +12,7 @@ class Major extends Model
 
     public function studyProgram()
     {
-        return $this->hasMany('App\StudyProgram');
+        return $this->hasMany('App\StudyProgram','jurusan_id');
     }
 
     public function lecturer()

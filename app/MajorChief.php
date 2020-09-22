@@ -16,6 +16,6 @@ class MajorChief extends Model
 
     public function lecturer()
     {
-        return $this->hasOne('App\Lecturer');
+        return $this->hasOne('App\Lecturer','dosen_id');
     }
 }

@@ -16,11 +16,12 @@ class Student extends Model
 
     public function class()
     {
-        return $this->belongsTo('App\ClassModel');
+        return $this->belongsTo('App\ClassModel','kelas_id');
     }
+
 
     public function filling()
     {
-        return $this->hasMany('App\Filling');
+        return $this->hasMany('App\Filling','mahasiswa_id');
     }
 }

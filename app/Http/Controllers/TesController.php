@@ -14,6 +14,6 @@ class TesController extends Controller
     {
         $kompentensi = Competence::all();
 
-        return response()->json($kompentensi[0]->question);
+        return response()->json($kompentensi[0]);
     }
 }

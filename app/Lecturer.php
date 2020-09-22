@@ -17,11 +17,11 @@ class Lecturer extends Model
 
     public function study_program()
     {
-        return $this->belongsTo('App\StudyProgram');
+        return $this->belongsTo('App\StudyProgram','prodi_id');
     }
 
     public function teach()
     {
-        return $this->hasMany('App\Teach');
+        return $this->hasMany('App\Teach','dosen_id');
     }
 }
