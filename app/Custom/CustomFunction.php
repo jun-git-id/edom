@@ -22,4 +22,9 @@ class CustomFunction
 
         return $kesimpulan;
     }
+
+    public function generateKelas($data)
+    {
+        # code...
+    }
 }

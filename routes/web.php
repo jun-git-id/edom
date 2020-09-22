@@ -21,4 +21,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/tes', 'TesController@index');
+Route::get('/tes', 'TesController@ambilQuestion');
