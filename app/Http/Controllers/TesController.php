@@ -26,4 +26,29 @@ class TesController extends Controller
 
         return response()->json($data);
     }
+
+    public function ui()
+    {
+        return view('admin.tes');
+    }
+
+    public function perMhs()
+    {
+        return view('admin.hasil-kuisioner.per-mhs');
+    }
+
+    public function ipkDosen()
+    {
+        return view('admin.hasil-kuisioner.ipk-dosen');
+    }
+
+    public function perPert()
+    {
+        return view('admin.hasil-kuisioner.per-pertanyaan');
+    }
+
+    public function rekapIpk()
+    {
+        return view('admin.hasil-kuisioner.rekap-ipk');
+    }
 }

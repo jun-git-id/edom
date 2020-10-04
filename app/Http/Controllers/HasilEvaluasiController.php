@@ -18,7 +18,7 @@ class HasilEvaluasiController extends Controller
     public function perMahasiswa()
     {
         $data = Filling::all();
-        
+
         return PerMahasiswaResource::collection($data);
     }
 
@@ -32,7 +32,7 @@ class HasilEvaluasiController extends Controller
 
     public function dosenSatuKelas($dosen_id, $kelas_id, $matkul_id)
     {
-        //60,29,22
+        //60/29/22
         $data = Teach::where([
             'dosen_id' => $dosen_id,
             'kelas_id' => $kelas_id,
@@ -52,7 +52,7 @@ class HasilEvaluasiController extends Controller
         ->get(); */
 
         $data = Lecturer::whereIn('id',[60,61,62,63,64])->get();
-        
+
 
 
         return PerDosenResource::collection($data);

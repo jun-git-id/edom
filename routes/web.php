@@ -21,4 +21,15 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+
+//TES
 Route::get('/tes', 'TesController@ambilQuestion');
+
+Route::get('tes-ui','TesController@ui');
+
+
+Route::get('tes-admin/per-mhs', 'TesController@perMhs');
+Route::get('tes-admin/ipk-dosen', 'TesController@ipkDosen');
+Route::get('tes-admin/per-pertanyaan', 'TesController@perPert');
+Route::get('tes-admin/rekap-ipk', 'TesController@rekapIpk');

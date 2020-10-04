@@ -1,6 +1,6 @@
 <?php
 
-
+//api/admin/hasil-evaluasi/
 Route::group([
     'prefix' => 'admin/hasil-evaluasi'
 ], function ($router) {
@@ -15,3 +15,5 @@ Route::group(['prefix' => 'mhs'], function ($router) {
     Route::get('/isi-kuisioner/{mengajar_id}','MahasiswaController@kuisioner');
     Route::post('/insert-kuisioner','MahasiswaController@insertKuisioner');
 });
+
+Route::get('/cek-mhs/{nim}/{thn_akd}','MahasiswaController@statusMhs');
