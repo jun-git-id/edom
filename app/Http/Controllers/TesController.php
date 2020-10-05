@@ -8,6 +8,7 @@ use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class TesController extends Controller
 {
@@ -50,5 +51,24 @@ class TesController extends Controller
     public function rekapIpk()
     {
         return view('admin.hasil-kuisioner.rekap-ipk');
+    }
+
+
+    public function inputDosen()
+    {
+        $user_id = DB::table('users')->insertGetId([
+            'username' =>  '1212a',
+            'email' => 'kusnawansar1@gmail.com',
+            'password' => Hash::make('password'),
+            'role_id' => '3'
+        ]);
+        DB::table('lecturers')->insert([
+            'nidk' => '1212a',
+            'nama' => 'kusnawansar',
+            'pendidikan' => 'Sejarah',
+            'bidang_ilmu' => 'Sejarah',
+            'user_id' => $user_id,
+            'prodi_id' => '3'
+        ]);
     }
 }

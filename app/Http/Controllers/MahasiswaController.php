@@ -17,7 +17,7 @@ class MahasiswaController extends Controller
 {
     public function index()
     {
-        # code...
+        return view('mhs.home');
     }
     public function daftarDosen()
     {
