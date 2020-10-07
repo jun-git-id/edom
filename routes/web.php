@@ -34,6 +34,18 @@ Route::get('tes-admin/ipk-dosen', 'TesController@ipkDosen');
 Route::get('tes-admin/per-pertanyaan', 'TesController@perPert');
 Route::get('tes-admin/rekap-ipk', 'TesController@rekapIpk');
 
+// TES EVENT
+Route::get('/epen','TesController@epen');
+// TES EMAIL
+Route::get('/tes-email','TesController@kirimEmail');
+
+// TES PDF
+Route::get('/tes-pdf','TesController@pdf');
+
+//TES GRAFIK
+Route::get('/grafik','TesController@grafik');
+//grafik for pdf
+Route::get('/grafik-pdf','TesController@grafikPdf');
 
 
 

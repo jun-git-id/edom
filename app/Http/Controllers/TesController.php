@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Competence;
+use App\Events\TesEvent;
+use App\Mail\TesMail;
 use App\Question;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use PDF;
 
 class TesController extends Controller
 {
@@ -70,5 +74,37 @@ class TesController extends Controller
             'user_id' => $user_id,
             'prodi_id' => '3'
         ]);
+    }
+
+    public function epen()
+    {
+
+        $data = 'data';
+        event(new TesEvent($data));
+    }
+
+    public function kirimEmail()
+    {
+
+        $data = 'data adfa faf adf';
+        Mail::to('badruakfm@gmail.com')->send(new TesMail($data));
+    }
+
+    public function pdf()
+    {
+        $pdf = PDF::loadView('tes.pdf');
+        return $pdf->stream('tadaf.pdf');
+    }
+
+    public function grafik()
+    {
+        return view('tes.grafik');
+    }
+
+    public function grafikPdf()
+    {
+        $pdf = PDF::loadView('tes.grafik-pdf');
+        return $pdf->stream('grafik.pdf');
+
     }
 }
