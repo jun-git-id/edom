@@ -16,6 +16,7 @@ class CreateFillingsTable extends Migration
         Schema::create('fillings', function (Blueprint $table) {
             $table->id();
             $table->timestamp('tgl_pengisian');
+            $table->text('komentar');
             $table->unsignedBigInteger('mahasiswa_id');
             $table->unsignedBigInteger('mengajar_id');
             $table->foreign('mahasiswa_id')->references('id')->on('students');

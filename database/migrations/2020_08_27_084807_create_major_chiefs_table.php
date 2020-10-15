@@ -17,10 +17,7 @@ class CreateMajorChiefsTable extends Migration
             $table->id();
             $table->string('nama');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('dosen_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('dosen_id')->references('id')->on('lecturers');
-            
             $table->timestamps();
         });
     }

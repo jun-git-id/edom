@@ -1,0 +1,252 @@
+--------
+select * from majors
+
+
+--------
+select * from study_programs where jurusan_id=1
+
+--------
+select angkatan from classes group by angkatan
+
+--------
+select * from classes where prodi_id=1 and angkatan=2017
+
+
+############MAHASISWA
+--------
+SELECT
+    mhs.id, mhs.nim, mhs.nama, avg(filld.nilai) as nilai
+FROM
+    students mhs, teaches te, fillings fill, filling_details filld
+WHERE
+    filld.pengisian_id = fill.id
+    and fill.mahasiswa_id = mhs.id
+    and mhs.kelas_id = 1
+    and te.tahun_akademik_id = 2
+group by mhs.id
+
+--------
+SELECT
+	te.id, dos.nama as nama_dosen, mk.nama_mk as matkul, avg(filld.nilai) as nilai
+from
+	lecturers dos, courses mk, teaches te, fillings fill, filling_details filld
+where
+	filld.pengisian_id = fill.id
+    and fill.mengajar_id = te.id
+    and te.dosen_id = dos.id
+    and te.mata_kuliah_id = mk.id
+    and fill.mahasiswa_id = 1
+    and te.tahun_akademik_id = 2
+group by te.id
+
+
+--------
+SELECT
+    filld.*
+FROM
+    teaches te, fillings fill, filling_details filld
+WHERE
+    filld.pengisian_id = fill.id
+    and fill.mengajar_id = te.id
+    and fill.mahasiswa_id = 1
+    and fill.mengajar_id = 781
+
+
+
+
+############DOSEN
+--------
+SELECT
+    dos.id, dos.nomor_induk, dos.nama, avg(filld.nilai) as nilai
+FROM
+    lecturers dos, teaches te, fillings fill, filling_details filld
+WHERE
+	filld.pengisian_id = fill.id
+    and fill.mengajar_id = te.id
+    and te.dosen_id = dos.id
+    and dos.prodi_id = 1
+    and te.tahun_akademik_id = 2
+GROUP BY dos.id
+
+--------
+select
+	te.id, concat(kls.prodi_id, kls.huruf, kls.angkatan) as kelas, mk.nama_mk, count(distinct fill.mahasiswa_id) as jml_responden, avg(filld.nilai) as nilai
+from
+	courses mk, classes kls, teaches te, fillings fill, filling_details filld
+where
+	filld.pengisian_id = fill.id
+    and fill.mengajar_id = te.id
+    and te.kelas_id = kls.id
+    and te.mata_kuliah_id = mk.id
+    and te.dosen_id = 1
+    and te.tahun_akademik_id = 2
+group by te.id
+
+--------
+
+-----------
+SELECT
+    filld.kompetensi
+FROM
+	teaches te,
+    fillings fill,
+    filling_details filld
+WHERE
+    filld.pengisian_id = fill.id
+	AND fill.mengajar_id = te.id
+    and te.tahun_akademik_id = 2
+    and te.dosen_id = 45
+GROUP BY filld.kompetensi
+
+SELECT
+    filld.pertanyaan, filld.kompetensi, avg(filld.nilai) as nilai
+FROM
+    teaches te, fillings fill, filling_details filld
+WHERE
+    filld.pengisian_id = fill.id
+    and fill.mengajar_id = te.id
+    and te.tahun_akademik_id = 2
+    and te.dosen_id = 45
+    and filld.kompetensi = 'Daya Tanggap Dosen/ PLP(Responsiveness)'
+GROUP BY filld.pertanyaan
+-----------
+select
+	filld.kompetensi, avg(filld.nilai) as nilai
+from
+	teaches te, fillings fill, filling_details filld
+where
+	filld.pengisian_id = fill.id
+    and fill.mengajar_id = te.id
+    and te.id = 701
+group by filld.kompetensi;
+
+select
+	filld.pertanyaan, filld.kompetensi, avg(filld.nilai) as nilai
+from
+	teaches te, fillings fill, filling_details filld
+where
+	filld.pengisian_id = fill.id
+    and fill.mengajar_id = te.id
+    and te.id = 701
+    and filld.kompetensi='Daya Tanggap Dosen/ PLP(Responsiveness)'
+group by filld.pertanyaan
+
+
+
+############MATKUL
+--------
+SELECT
+    mk.id, mk.nama_mk, mk.semester,avg(filld.nilai) as nilai
+FROM
+    courses mk, teaches te, fillings fill, filling_details filld
+WHERE
+    filld.pengisian_id = fill.id
+    and fill.mengajar_id = te.id
+    and te.mata_kuliah_id = mk.id
+    and mk.prodi_id=1
+    and te.tahun_akademik_id=2
+GROUP BY mk.id
+
+--------
+SELECT
+    dos.id, dos.nama, avg(filld.nilai) as nilai
+FROM
+    courses mk, lecturers dos, teaches te, fillings fill, filling_details filld
+WHERE
+    filld.pengisian_id = fill.id
+    and fill.mengajar_id = te.id
+    and te.dosen_id = dos.id
+    and te.mata_kuliah_id = mk.id
+    and mk.id = 12
+    and te.tahun_akademik_id=2
+GROUP BY dos.id
+order by nilai desc
+
+
+############JURUSAN
+--------
+SELECT
+    jur.id, jur.nama_jurusan, avg(filld.nilai) as nilai
+FROM
+    majors jur, study_programs pro, lecturers dos, teaches te, fillings fill, filling_details filld
+WHERE
+    filld.pengisian_id = fill.id
+    and fill.mengajar_id = te.id
+    and te.dosen_id = dos.id
+    and dos.prodi_id = pro.id
+    and pro.jurusan_id = jur.id
+    and te.tahun_akademik_id = 2
+GROUP BY jur.id
+
+
+--------
+SELECT
+    pro.id, pro.nama_prodi, avg(filld.nilai) as nilai
+FROM
+    study_programs pro, lecturers dos, teaches te, fillings fill, filling_details filld
+WHERE
+    filld.pengisian_id = fill.id
+    and fill.mengajar_id = te.id
+    and te.dosen_id = dos.id
+    and dos.prodi_id = pro.id
+    and pro.jurusan_id = 2
+    and te.tahun_akademik_id = 2
+GROUP BY pro.id
+
+
+############GRAFIK TAHUNAN
+--------
+SELECT
+    thn.tahun, thn.ganjil_genap, avg(filld.nilai) as nilai
+FROM
+    academic_years thn, teaches te, fillings fill, filling_details filld
+WHERE
+    filld.pengisian_id = fill.id
+    and fill.mengajar_id = te.id
+    and te.tahun_akademik_id = thn.id
+GROUP BY thn.id
+
+
+
+--------
+SELECT
+    thn.tahun, thn.ganjil_genap, avg(filld.nilai) as nilai
+FROM
+    majors jur, study_programs pro, lecturers dos, academic_years thn, teaches te, fillings fill, filling_details filld
+WHERE
+    filld.pengisian_id = fill.id
+    and fill.mengajar_id = te.id
+    and te.dosen_id = dos.id
+    and dos.prodi_id = pro.id
+    and pro.jurusan_id = jur.id
+    and jur.id = 1
+    and te.tahun_akademik_id = thn.id
+GROUP BY thn.id
+
+
+
+--------
+SELECT
+    thn.tahun, thn.ganjil_genap, avg(filld.nilai) as nilai
+FROM
+    study_programs pro, lecturers dos, academic_years thn, teaches te, fillings fill, filling_details filld
+WHERE
+    filld.pengisian_id = fill.id
+    and fill.mengajar_id = te.id
+    and te.dosen_id = dos.id
+    and dos.prodi_id = pro.id
+    and pro.id = 3
+    and te.tahun_akademik_id = thn.id
+GROUP BY thn.id
+
+--------
+select
+	thn.tahun, thn.ganjil_genap, avg(filld.nilai) as nilai
+from
+	academic_years thn, teaches te, fillings fill, filling_details filld
+where
+	filld.pengisian_id = fill.id
+    and fill.mengajar_id = te.id
+    and te.dosen_id = 1
+    and te.tahun_akademik_id = thn.id
+GROUP BY thn.id

@@ -10,6 +10,9 @@
     <meta name="author" content="">
 
     <title>@yield('title')</title>
+    @stack('title')
+
+
 
     <!-- Custom fonts for this template-->
     <link href="<?= url('/template-admin/vendor/fontawesome-free/css/all.min.css') ?>" rel="stylesheet" type="text/css">
@@ -44,7 +47,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="<?= url('/admin') ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -57,36 +60,61 @@
                 Interface
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLihatData" aria-expanded="true" aria-controls="collapseLihatData">
+                    <i class="fas fa-fw fa-database"></i>
+                    <span>Lihat Data</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseLihatData" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        <a class="collapse-item" href="<?= url('/admin/lihat-data/mahasiswa') ?>">Mahasiswa</a>
+                        <a class="collapse-item" href="<?= url('/admin/lihat-data/dosen') ?>">Dosen</a>
+                        <a class="collapse-item" href="<?= url('/admin/lihat-data/matkul') ?>">Mata Kuliah</a>
                     </div>
                 </div>
             </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKuisioner" aria-expanded="true" aria-controls="collapseKuisioner">
+                    <i class="fas fa-fw fa-sticky-note"></i>
+                    <span>Kuisioner</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div id="collapseKuisioner" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="<?= url('/tes-admin/per-mhs') ?>">Hasil Kuisioner per Mahasiswa</a>
-                        <a class="collapse-item" href="<?= url('/tes-admin/ipk-dosen') ?>">Index Prestasi Kinerja Dosen</a>
-                        <a class="collapse-item" href="<?= url('/tes-admin/per-pertanyaan') ?>">Detail Evaluasi Kinerja Dosne</a>
-                        <a class="collapse-item" href="<?= url('/tes-admin/rekap-ipk') ?>">Rejap IPK Dosen</a>
+                        <a class="collapse-item" href="<?= url('/admin/kuisioner/kompetensi') ?>">Kompetensi</a>
+                        <a class="collapse-item" href="<?= url('/admin/kuisioner/pertanyaan') ?>">Aspek Penilaian</a>
                     </div>
                 </div>
+            </li>
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-arrow-circle-left"></i>
+                    <span>Import Data</span></a>
+            </li>
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHasilKuisioner" aria-expanded="true" aria-controls="collapseHasilKuisioner">
+                    <i class="fas fa-fw fa-chart-bar"></i>
+                    <span>Hasil Kuisioner</span>
+                </a>
+                <div id="collapseHasilKuisioner" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="<?= url('/admin/hasil-evaluasi/mhs') ?>">Mahasiswa</a>
+                        <a class="collapse-item" href="<?= url('/admin/hasil-evaluasi/dosen') ?>">Dosen</a>
+                        <a class="collapse-item" href="<?= url('/admin/hasil-evaluasi/matkul') ?>">Matkul</a>
+                        <a class="collapse-item" href="<?= url('/admin/hasil-evaluasi/jurusan') ?>">Jurusan</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-line"></i>
+                    <span>Grafik Tahunan</span></a>
             </li>
 
             <!-- Divider -->
@@ -372,6 +400,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="<?= url('/template-admin/js/sb-admin-2.min.js') ?>"></script>
+    <script src="<?= url('/js/script.js') ?>"></script>
 
     @stack('script')
 

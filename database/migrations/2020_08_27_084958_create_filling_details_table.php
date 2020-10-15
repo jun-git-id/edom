@@ -17,7 +17,7 @@ class CreateFillingDetailsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('pengisian_id');
             $table->text('pertanyaan');
-            $table->string('kompetensi');
+            $table->text('kompetensi');
             $table->integer('nilai');
             $table->foreign('pengisian_id')->references('id')->on('fillings');
             $table->timestamps();

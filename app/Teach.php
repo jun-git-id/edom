@@ -24,6 +24,11 @@ class Teach extends Model
         return $this->belongsTo('App\Lecturer','dosen_id');
     }
 
+    public function academicYear()
+    {
+        return $this->belongsTo('App\AcademicYear','tahun_akademik_id');
+    }
+
     public function filling()
     {
         return $this->hasMany('App\Filling','mengajar_id');

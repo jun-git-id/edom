@@ -5,12 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>fafa</title>
+    <link rel="stylesheet" href="<?= public_path('/css/tes.css') ?>">
 </head>
 
 <body>
     <h1>tes</h1>
-    <p>ikan</p>
+    <p id="ikan">ikan</p>
+
+    {{ 'sdfas' }}
+
+
     <img src="<?= public_path('/img/sendal.jpg') ?>" alt="" srcset="">
+
 </body>
 
 </html>
+

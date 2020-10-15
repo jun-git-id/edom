@@ -24,10 +24,23 @@ class HasilEvaluasiController extends Controller
 
     public function dosenPerKelas()
     {
-        $data = Lecturer::find(60);
+        /* $data = Lecturer::find(60);
 
 
-        return new DosenPerKelasResource($data);
+        return new DosenPerKelasResource($data); */
+
+        $id = 60;
+
+        $data = DB::select(DB::raw("select te.id, concat(cls.prodi_id, cls.huruf, cls.angkatan) as kelas, mk.nama_mk, count(distinct fill.mahasiswa_id) as jml_responden, avg(filld.nilai) as nilai
+        from teaches te, classes cls, courses mk, fillings fill, filling_details filld
+        where te.kelas_id = cls.id
+        and te.mata_kuliah_id = mk.id
+        and fill.mengajar_id = te.id
+        and filld.pengisian_id = fill.id
+        and dosen_id=$id
+        group by id"));
+
+        return response()->json($data);
     }
 
     public function dosenSatuKelas($dosen_id, $kelas_id, $matkul_id)

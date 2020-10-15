@@ -26,6 +26,7 @@ class PengisianSeeder extends Seeder
                 foreach($mengajar as $mgr){
                     DB::table('fillings')->insert([
                         'tgl_pengisian' => '2019-12-12 12:00:00',
+                        'komentar' => 'lorem ipsum dolor sit amet. Amerta buarta suarta bata. Gala gala gala. Tobangga tobannga. Ohaya',
                         'mahasiswa_id' => $mhs->id,
                         'mengajar_id' => $mgr->id
                     ]);

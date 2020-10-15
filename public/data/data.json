@@ -72,23 +72,18 @@
         },
         {
             "id": "5",
-            "nama_prodi": "D2 Teknik Mesin Pertanian",
+            "nama_prodi": "D2 Teknik Mesin Perikanan",
             "jurusan_id": "3"
         },
         {
             "id": "6",
-            "nama_prodi": "D2 Teknik Mesin Perikanan",
+            "nama_prodi": "D2 Teknik Mesin Pertanian",
             "jurusan_id": "3"
         },
         {
             "id": "7",
             "nama_prodi": "D4 Teknik Pengendalian Pencemaran Lingkungan",
             "jurusan_id": "4"
-        },
-        {
-            "id": "8",
-            "nama_prodi": "D4 Teknik Pengembangan Produk Agroindustri",
-            "jurusan_id": "5"
         }
     ],
     "mata_kuliah": [

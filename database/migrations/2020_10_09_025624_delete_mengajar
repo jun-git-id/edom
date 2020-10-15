@@ -1,0 +1,62 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class DeleteMengajar extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::dropIfExists('filling_details');
+        Schema::dropIfExists('fillings');
+        Schema::dropIfExists('teaches');
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::create('teaches', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('dosen_id');
+            $table->unsignedBigInteger('kelas_id');
+            $table->unsignedBigInteger('mata_kuliah_id');
+            $table->unsignedBigInteger('tahun_akademik_id');
+            $table->foreign('dosen_id')->references('id')->on('lecturers');
+            $table->foreign('kelas_id')->references('id')->on('classes');
+            $table->foreign('mata_kuliah_id')->references('id')->on('courses');
+            $table->foreign('tahun_akademik_id')->references('id')->on('academic_years');
+            $table->timestamps();
+        });
+
+        Schema::create('fillings', function (Blueprint $table) {
+            $table->id();
+            $table->timestamp('tgl_pengisian');
+            $table->text('komentar');
+            $table->unsignedBigInteger('mahasiswa_id');
+            $table->unsignedBigInteger('mengajar_id');
+            $table->foreign('mahasiswa_id')->references('id')->on('students');
+            $table->foreign('mengajar_id')->references('id')->on('teaches');
+            $table->timestamps();
+        });
+
+        Schema::create('filling_details', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('pengisian_id');
+            $table->text('pertanyaan');
+            $table->text('kompetensi');
+            $table->integer('nilai');
+            $table->foreign('pengisian_id')->references('id')->on('fillings');
+            $table->timestamps();
+        });
+    }
+}

@@ -18,12 +18,12 @@ class MahasiswaSeeder extends Seeder
 
         foreach($kelas as $kls){
             for($i=1; $i<=24; $i++){
-                $name = strtolower($faker->firstNameMale);
+                $name = strtolower($faker->firstNameMale) . ' ' . Str::random(5);
 
                 $nim = substr(strval($kls->angkatan), 2, 2) . strtolower($kls->huruf) . strval($kls->prodi_id) . strval($i);
 
                 $user_id = DB::table('users')->insertGetId([
-                    'username' => strtolower($name),
+                    'username' => $nim,
                     'email' => strtolower($name) . Str::random(3) . '@gmail.com',
                     'password' => Hash::make('password'),
                     'role_id' => '2',

@@ -24,23 +24,21 @@ class DosenSeeder extends Seeder
 
         foreach ($prodi as $pr) {
 
-            for ($i = 1; $i <= 24; $i++) {
-                $name = strtolower($faker->firstNameMale);
+            for ($i = 1; $i <= 22; $i++) {
+                $name = strtolower($faker->firstNameMale) . ' ' . Str::random(5);
 
                 $ni =  '1990'.strval($pr->id) . strval($i);
 
                 $user_id = DB::table('users')->insertGetId([
-                    'username' => strtolower($name),
+                    'username' => $ni,
                     'email' => strtolower($name) . Str::random(3) . '@gmail.com',
                     'password' => Hash::make('password'),
                     'role_id' => '3',
                 ]);
 
                 DB::table('lecturers')->insert([
-                    'nidk' => $ni,
+                    'nomor_induk' => $ni,
                     'nama' => $name,
-                    'pendidikan' => 'S2',
-                    'bidang_ilmu' => $pr->nama_prodi,
                     'user_id' => $user_id,
                     'prodi_id' => $pr->id
                 ]);

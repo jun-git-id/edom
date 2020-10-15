@@ -15,7 +15,7 @@ class CreateCompetencesTable extends Migration
     {
         Schema::create('competences', function (Blueprint $table) {
             $table->id();
-            $table->string('aspek_kompetensi');
+            $table->text('aspek_kompetensi');
             $table->timestamps();
         });
     }

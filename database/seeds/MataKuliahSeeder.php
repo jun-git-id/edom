@@ -29,13 +29,16 @@ class MataKuliahSeeder extends Seeder
 
         $prodi = $data->prodi;
         foreach ($prodi as $pr) {
+            if($pr->id == 3){
+                continue;
+            }
             for ($smt_i = 1; $smt_i <= 6; $smt_i++) {
                 switch ($smt_i) {
                     case 5:
                         //teori
                         for ($i = 1; $i <= 4; $i++) {
                             DB::table('courses')->insert([
-                                'nama_mk' => "MatKul $pr->nama_prodi Smt$smt_i Teo$i",
+                                'nama_mk' => "MK $pr->nama_prodi Smt$smt_i Teo$i",
                                 'sks' => '2',
                                 'semester' => $smt_i,
                                 'prodi_id' => $pr->id
@@ -54,7 +57,7 @@ class MataKuliahSeeder extends Seeder
                         //teori
                         for ($i = 1; $i <= 5; $i++) {
                             DB::table('courses')->insert([
-                                'nama_mk' => "MatKul $pr->nama_prodi Smt$smt_i Teo$i",
+                                'nama_mk' => "MK $pr->nama_prodi Smt$smt_i Teo$i",
                                 'sks' => '2',
                                 'semester' => $smt_i,
                                 'prodi_id' => $pr->id
@@ -79,7 +82,7 @@ class MataKuliahSeeder extends Seeder
                         //teori
                         for ($i = 1; $i <= 5; $i++) {
                             DB::table('courses')->insert([
-                                'nama_mk' => "MatKul $pr->nama_prodi Smt$smt_i Teo$i",
+                                'nama_mk' => "MK $pr->nama_prodi Smt$smt_i Teo$i",
                                 'sks' => '2',
                                 'semester' => $smt_i,
                                 'prodi_id' => $pr->id
@@ -88,7 +91,7 @@ class MataKuliahSeeder extends Seeder
                         //praktek
                         for ($i = 1; $i <= 5; $i++) {
                             DB::table('courses')->insert([
-                                'nama_mk' => "MatKul $pr->nama_prodi Smt$smt_i Prak$i",
+                                'nama_mk' => "MK $pr->nama_prodi Smt$smt_i Prak$i",
                                 'sks' => '2',
                                 'semester' => $smt_i,
                                 'prodi_id' => $pr->id

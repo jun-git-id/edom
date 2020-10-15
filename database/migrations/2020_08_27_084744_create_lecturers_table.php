@@ -15,10 +15,8 @@ class CreateLecturersTable extends Migration
     {
         Schema::create('lecturers', function (Blueprint $table) {
             $table->id();
-            $table->string('nidk');
+            $table->string('nomor_induk');
             $table->string('nama');
-            $table->string('pendidikan');
-            $table->string('bidang_ilmu');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('prodi_id');
             $table->foreign('user_id')->references('id')->on('users');
