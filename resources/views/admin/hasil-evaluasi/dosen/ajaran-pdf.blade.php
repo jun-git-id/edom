@@ -12,18 +12,28 @@
         <p>Hasil Evaluasi Dosen </p>
     </center>
     <div id="info">
-        <p>
-            Nomor Induk : {{ $info['nomor_induk'] }} <br>
-            Nama Dosen : {{ $info['nama_dosen'] }} <br>
-            <br>
-            Matkul : {{ $info['matkul'] }} <br>
-            Kelas : {{ $info['kelas'] }} <br>
-            Jumlah Responden : {{ $info['jml_responden'] }} Orang <br>
-            <br>
-            Tahun Ajaran : {{ $info['thn_ak'] }} <br>
-        </p>
+        <div style="float: left">
+            <p>
+                Nomor Induk : {{ $info['nomor_induk'] }} <br>
+                Nama Dosen : {{ $info['nama_dosen'] }} <br>
+            </p>
+        </div>
+        <div style="float: right">
+            <p>
+                Matkul : {{ $info['matkul'] }} <br>
+                Kelas : {{ $info['kelas'] }} <br>
+                Jumlah Responden : {{ $info['jml_responden'] }} Orang <br> <br>
+                Tahun Ajaran : {{ $info['thn_ak'] }} <br>
+            </p>
+        </div>
 
     </div>
+    <br>
+    <br>
+    <br>
+    <br><br>
+    <br>
+    <br>
 
     <div>
         <table>
