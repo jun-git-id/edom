@@ -12,6 +12,7 @@ class HasilEvaluasiDosen extends Controller
     public function prodiShow(Request $request, $prodi_id)
     {
         $tahun_akademik_id = $request->get('tahun_id',$tahun_akademik_id = CustomFunction::ambilLastTahunAc());
+        $data['tahun_id'] = $tahun_akademik_id;
 
         $data['prodi'] = DB::table('study_programs')->where('id', $prodi_id)->first();
         $data['dosen'] = DB::select(DB::raw("
@@ -39,6 +40,7 @@ class HasilEvaluasiDosen extends Controller
     public function dosenShow(Request $request, $dosen_id)
     {
         $tahun_akademik_id = $request->get('tahun_id',$tahun_akademik_id = CustomFunction::ambilLastTahunAc());
+        $data['tahun_id'] = $tahun_akademik_id;
 
 
         $data['dosen'] = DB::table('lecturers')->where('id', $dosen_id)->first();
@@ -70,6 +72,7 @@ class HasilEvaluasiDosen extends Controller
     public function dosenPertShow(Request $request, $dosen_id)
     {
         $tahun_akademik_id = $request->get('tahun_id',$tahun_akademik_id = CustomFunction::ambilLastTahunAc());
+        $data['tahun_id'] = $tahun_akademik_id;
 
         $data['dosen'] = DB::table('lecturers')->where('id', $dosen_id)->first();
 

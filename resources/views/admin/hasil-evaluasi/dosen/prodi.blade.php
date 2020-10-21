@@ -5,7 +5,7 @@
 @section('content')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Matkul</a></li>
+        <li class="breadcrumb-item"><a href="#">Dosen</a></li>
         <li class="breadcrumb-item"><a href="#">Jurusan</a></li>
         <li class="breadcrumb-item"><a href="#">Prodi</a></li>
 
@@ -16,8 +16,7 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Hasil Evaluasi Dosen</h1>
     <div>
-        <a href="/chart" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"><i class="fas fa-chart-bar fa-sm text-white-50"></i> Tampilan Grafik</a>
-        <a href="<?= url('/pdf/table') ?>" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-file-pdf fa-sm text-white-50"></i> Export to pdf</a>
+        <a id="pdf-button" target="_blank" target="_blank" href="<?= url('/admin/hasil-evaluasi/dosen/prodi/'. $prodi_id .'/pdf') ?>" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-file-pdf fa-sm text-white-50"></i> Export to pdf</a>
     </div>
 
 </div>
@@ -64,8 +63,18 @@
         </table>
 
 
+        <div id="preloader">
+            <br><br>
+            <div class="text-center">
+                <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+
         <br>
         <br>
+
 
 
         <div style="display: flex; justify-content: flex-end" class=" mr-5">
@@ -90,25 +99,28 @@
 
     const url_ambil_thn = "<?= url('/api/get-thn_ak') ?>";
 
-        tampilTahunAk(url_ambil_thn);
-        $('#tampilkan-btn').click(e => {
-            e.preventDefault();
+    tampilTahunAk(url_ambil_thn);
+    $('#tampilkan-btn').click(e => {
+        e.preventDefault();
+        $('#info').text('');
+        $('#dosen').text('');
+        $('#rata2').text('');
+        $('#preloader').css('display', '');
 
 
 
-            const thn_id = $('#tahun_akademik').find(":selected").attr('value');
-            const url2 = `<?= url('/api/admin/hasil-evaluasi/dosen/prodi/' . $prodi_id . '?tahun_id=${thn_id}') ?>`;
-            $.get(url2, data => {
-                $('#info').text('');
-                $('#dosen').text('');
-                $('#rata2').text('');
-                tampilData(data);
-                //console.log(data);
-            });
-
+        const thn_id = $('#tahun_akademik').find(":selected").attr('value');
+        const url2 = `<?= url('/api/admin/hasil-evaluasi/dosen/prodi/' . $prodi_id . '?tahun_id=${thn_id}') ?>`;
+        $.get(url2, data => {
+            $('#preloader').css('display', 'none');
+            tampilData(data);
+            console.log(data);
         });
 
+    });
+
     $.get(url, data => {
+        $('#preloader').css('display', 'none');
         tampilData(data);
     });
 
@@ -124,7 +136,7 @@
                     <td>${dt.nomor_induk}</td>
                     <td>${dt.nama}</td>
                     <td>${dt.jml_kelas}</td>
-                    <td>${dt.nilai}</td>
+                    <td>${ toPersen(dt.nilai) }</td>
                     <td>${ambilKesimpulan(dt.nilai)}</td>
                     <td> <a href="<?= url('/admin/hasil-evaluasi/dosen/dosen/${dt.id}') ?>"><i class="fas fa-search-plus" ></i></a> </td>
                 </tr>`;
@@ -137,7 +149,7 @@
 
         const el2 = `<tr>
                         <td>Rata - rata</td>
-                        <td>: ${average(arr)}</td>
+                        <td>: ${toPersen(average(arr))}</td>
                     </tr>
                     <tr>
                         <td>Keterangan</td>
@@ -145,6 +157,8 @@
                     </tr>`;
 
         $('#rata2').append(el2);
+
+        $('#pdf-button').attr('href',`<?= url('/admin/hasil-evaluasi/dosen/prodi/' . $prodi_id . '/pdf?tahun_id=${data.tahun_id}') ?>`);
 
     };
 </script>

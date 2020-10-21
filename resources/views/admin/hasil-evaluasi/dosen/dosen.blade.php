@@ -17,8 +17,8 @@
     <h1 class="h3 mb-0 text-gray-800">Hasil Evaluasi Dosen</h1>
     <div>
         <a href="<?= url('/admin/hasil-evaluasi/dosen/dosen-pert/' . $dosen_id) ?>" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"><i class="fas fa-sticky-note fa-sm text-white-50"></i> Per Pertanyaan</a>
-        <a href="/chart" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"><i class="fas fa-chart-bar fa-sm text-white-50"></i> Tampilan Grafik</a>
-        <a href="<?= url('/pdf/table') ?>" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-file-pdf fa-sm text-white-50"></i> Export to pdf</a>
+        <a id="grafik-button" href="<?= url('/admin/hasil-evaluasi/dosen/dosen/' . $dosen_id . '/grafik') ?>" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"><i class="fas fa-chart-bar fa-sm text-white-50"></i> Tampilan Grafik</a>
+        <a id="pdf-button" target="_blank" id="pdf-button" href="" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-file-pdf fa-sm text-white-50"></i> Export to pdf</a>
     </div>
 
 </div>
@@ -62,6 +62,14 @@
 
             </tbody>
         </table>
+        <div id="preloader">
+            <br><br>
+            <div class="text-center">
+                <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
 
 
         <br>
@@ -94,6 +102,7 @@
     tampilTahunAk(url_ambil_thn);
     $('#tampilkan-btn').click(e => {
         e.preventDefault();
+        $('#preloader').css('display', '');
 
 
 
@@ -103,6 +112,7 @@
             $('#info').text('');
             $('#ajaran').text('');
             $('#rata2').text('');
+            $('#preloader').css('display', 'none');
             tampilData(data);
             //console.log(data);
         });
@@ -110,6 +120,7 @@
     });
 
     $.get(url, data => {
+        $('#preloader').css('display', 'none');
         tampilData(data);
     });
 
@@ -126,7 +137,7 @@
                             <td>${dt.kelas}</td>
                             <td>${dt.nama_mk}</td>
                             <td>${dt.jml_responden} Orang</td>
-                            <td>${dt.nilai}</td>
+                            <td>${ toPersen(dt.nilai) }</td>
                             <td>${ambilKesimpulan(dt.nilai)}</td>
                             <td> <a href="<?= url('/admin/hasil-evaluasi/dosen/ajaran/${dt.id}') ?>"><i class="fas fa-search-plus"></i></a> </td>
                         </tr>`;
@@ -138,7 +149,7 @@
 
         const el2 = `<tr>
                         <td>Rata - rata</td>
-                        <td>: ${average(arr)}</td>
+                        <td>: ${toPersen(average(arr))}</td>
                     </tr>
                     <tr>
                         <td>Keterangan</td>
@@ -146,6 +157,8 @@
                     </tr>`;
 
         $('#rata2').append(el2);
+
+        $('#pdf-button').attr('href',`<?= url('/admin/hasil-evaluasi/dosen/dosen/' . $dosen_id . '/pdf?tahun_id=${data.tahun_id}') ?>`);
 
     };
 </script>

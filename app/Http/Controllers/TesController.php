@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Competence;
+use App\Custom\CustomFunction;
 use App\Events\TesEvent;
 use App\Mail\TesMail;
 use App\Question;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use PDF;
 
@@ -322,7 +324,7 @@ class TesController extends Controller
     }
 
 
-    public function takeMhs($skip,$take)
+    public function takeMhs($skip, $take)
     {
         $mahasiswa = DB::table('students')->skip($skip)->take($take)->get();
         $data = [];
@@ -352,38 +354,38 @@ class TesController extends Controller
 
     public function seeding4()
     {
-        $data = $this->takeMhs(100,100);
+        $data = $this->takeMhs(100, 100);
         return response()->json($data);
     }
 
     public function seedingPengisianSeeder1()
     {
-        $data = $this->takeMhs(0,336);
+        $data = $this->takeMhs(0, 336);
         return response()->json($data);
     }
     public function seedingPengisianSeeder2()
     {
-        $data = $this->takeMhs(336,336);
+        $data = $this->takeMhs(336, 336);
         return response()->json($data);
     }
     public function seedingPengisianSeeder3()
     {
-        $data = $this->takeMhs(672,336);
+        $data = $this->takeMhs(672, 336);
         return response()->json($data);
     }
     public function seedingPengisianSeeder4()
     {
-        $data = $this->takeMhs(1008,336);
+        $data = $this->takeMhs(1008, 336);
         return response()->json($data);
     }
     public function seedingPengisianSeeder5()
     {
-        $data = $this->takeMhs(1344,336);
+        $data = $this->takeMhs(1344, 336);
         return response()->json($data);
     }
     public function seedingPengisianSeeder6()
     {
-        $data = $this->takeMhs(1680,336);
+        $data = $this->takeMhs(1680, 336);
         return response()->json($data);
     }
 
@@ -396,5 +398,98 @@ class TesController extends Controller
     public function ui2()
     {
         return view('tes.ui2');
+    }
+
+    public function tesPost()
+    {
+        $data['ajaran'] = DB::select(DB::raw("
+        select
+            te.id, pro.nama_prodi, kls.huruf, kls.angkatan, mk.nama_mk, count(distinct fill.mahasiswa_id) as jml_responden, avg(filld.nilai) as nilai
+        from
+            courses mk, study_programs pro, classes kls, teaches te, fillings fill, filling_details filld
+        where
+            filld.pengisian_id = fill.id
+            and fill.mengajar_id = te.id
+            and te.kelas_id = kls.id
+            and kls.prodi_id = pro.id
+            and te.mata_kuliah_id = mk.id
+            and te.dosen_id = 45
+            and te.tahun_akademik_id = 2
+        group by te.id
+        "));
+
+
+        foreach ($data['ajaran'] as $dt) {
+            $dt->kelas = CustomFunction::generateKelas($dt->nama_prodi, $dt->huruf, $dt->angkatan);
+            $dt->keterangan = CustomFunction::ambilKesimpulan($dt->nilai);
+        }
+
+
+
+        /* $arr = [
+            'A1',
+            'A2',
+            'A3',
+            'A4'
+        ];
+        $arr2 = [
+            40,
+            50,
+            60,
+            80,
+        ]; */
+
+        $arr = [];
+        $arr2 = [];
+        foreach($data['ajaran'] as $dt){
+            $arr[] = $dt->kelas;
+            $arr2[] = $dt->nilai;
+        }
+
+        $arr_im =  implode("','",$arr);
+        $arr2_im = implode(',',$arr2);
+
+        //return $arr_im;
+
+        $response = Http::post('https://quickchart.io/chart/create', [
+            'chart' => "{
+                type: 'bar',
+                data: {
+                  labels: ['".$arr_im."'],
+                  datasets: [
+                    {
+                      label: 'Users',
+                      data: [".$arr2_im."],
+                      backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                      borderColor: 'rgb(54, 162, 235)',
+                      borderWidth: 1,
+                    },
+                  ],
+                },
+                options: {
+                  title: {
+                    display: true,
+                    text: 'Chart.js Line Chart',
+                  },
+                  plugins: {
+                    datalabels: {
+                      anchor: 'center',
+                      align: 'center',
+                      color: '#fff',
+                      font: {
+                        weight: 'bold',
+                      },
+                    },
+                  },
+                },
+              }"
+        ]);
+
+        $url = $response->json()['url'];
+
+        $pdf = PDF::loadView('grafik.pdf2', compact('url'));
+        return $pdf->stream('pdf.pdf');
+
+
     }
 }

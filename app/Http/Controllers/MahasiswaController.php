@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\AcademicYear;
+use App\Competence;
+use App\Custom\CustomFunction;
 use App\Filling;
 use App\FillingDetail;
 use App\Http\Resources\DaftarDosenResource;
 use App\Question;
+use App\Share;
 use App\Student;
 use App\Teach;
 use DateTime;
@@ -17,80 +21,153 @@ class MahasiswaController extends Controller
 {
     public function index()
     {
-        return view('mhs.home');
-    }
-    public function daftarDosen()
-    {
-        $mhs = Student::find(673);
 
-        //return DaftarDosenResource::collection($data, 'abc');
-        return new DaftarDosenResource($mhs);
+        $mhs_id = Auth::user()->student->id;
+        return view('mhs.home', compact('mhs_id'));
     }
 
-    public function kuisioner($mengajar_id)
+    public function ambilLastBagikan()
     {
-        $mhs_id = 673;
+        return Share::all()->last()->tahun_akademik_id;
+    }
+    public function daftarDosen(Request $request, $mhs_id)
+    {
+        $mhs = Student::find($mhs_id);
+        $tahun_akademik_id = $request->get('tahun_id',$tahun_akademik_id = $this->ambilLastBagikan());
+        $tahunAk = AcademicYear::find($tahun_akademik_id);
 
-        $mengajar = Teach::find($mengajar_id);
-
-        $data = [
-            'nik_dosen' => $mengajar->lecturer->nidk,
-            'nama_dosen' => $mengajar->lecturer->nama,
-            'tahun_akademik' => $mengajar->tahun,
-            'matkul' => $mengajar->course->nama_mk,
-            'kelas' => $mengajar->class->studyProgram->nama_prodi . $mengajar->class->huruf . $mengajar->class->angkatan,
-            'prodi' => $mengajar->class->studyProgram->nama_prodi
+        $data['info'] = [
+            'kelas' => CustomFunction::generateKelas($mhs->class->studyProgram->nama_prodi, $mhs->class->huruf, $mhs->class->angkatan),
+            'tahun_akademik' => CustomFunction::generateTahun($tahunAk->tahun, $tahunAk->ganjil_genap)
         ];
 
+        $data['ajaran'] = DB::select(DB::raw("
+        SELECT
+            te.id, dos.nama, mk.nama_mk, mk.sks
+        FROM
+            courses mk, lecturers dos, teaches te
+        WHERE
+            te.dosen_id = dos.id
+            and te.mata_kuliah_id = mk.id
+            and te.kelas_id = $mhs->kelas_id
+            and tahun_akademik_id = $tahun_akademik_id
+        "));
+
+        foreach ($data['ajaran'] as $dt) {
+            $dt->status = $this->status($mhs->id,$dt->id);
+        }
+
         return response()->json($data);
+
+        //return DaftarDosenResource::collection($data, 'abc');
+        //return new DaftarDosenResource($mhs);
+    }
+
+    public function status($mhs_id, $mengajar_id)
+    {
+        $data = Filling::where([
+            'mahasiswa_id' => $mhs_id,
+            'mengajar_id' => $mengajar_id
+        ])->first();
+
+        if($data){
+            return 'Kuisioner Sudah Diisi';
+        }else{
+            return 'Kuisioner Belum Diisi';
+        }
+    }
+
+    public function kuisioner(Request $request, $mengajar_id)
+    {
+        $mhs_id = Auth::user()->student->id;
+        $tahun_akademik_id = $request->get('tahun_id',$tahun_akademik_id = CustomFunction::ambilLastTahunAc());
+
+        $ajaran = DB::select(Db::raw("
+                SELECT
+            dos.nomor_induk, dos.nama, pro.nama_prodi, kls.huruf, kls.angkatan, mk.nama_mk, thn.tahun, thn.ganjil_genap
+        FROM
+            academic_years thn, courses mk, study_programs pro, classes kls, lecturers dos, teaches te
+        WHERE
+            te.dosen_id = dos.id
+            and te.kelas_id = kls.id
+            and kls.prodi_id = pro.id
+            and te.mata_kuliah_id = mk.id
+            and te.tahun_akademik_id = thn.id
+            and te.id = $mengajar_id
+            and thn.id = $tahun_akademik_id;
+        "))[0];
+
+        $ajaran->kelas = CustomFunction::generateKelas($ajaran->nama_prodi, $ajaran->huruf, $ajaran->angkatan);
+        $ajaran->mengajar_id = $mengajar_id;
+
+
+        $kompetensi = Competence::all();
+
+        //return response()->json($ajaran);
+        return view('mhs.isi', compact('ajaran', 'kompetensi'));
     }
 
     public function insertKuisioner(Request $request)
     {
-        $mhs_id = 673;
+        $mhs_id = Auth::user()->student->id;
+
+        //return response()->json($request->nilai);
+
+
+        $nilai = $request->nilai;
 
         $pengisian = Filling::create([
-            'tgl_pengisian' => '2020-05-05 12:12:12',
+            'tgl_pengisian' => date('Y-m-d H:i:s'),
             'mahasiswa_id' => $mhs_id,
-            'mengajar_id' => $request->mengajar_id
+            'mengajar_id' => $request->mengajar_id,
+            'komentar' => $request->komentar
         ]);
 
         $pertanyaan = Question::all();
         $nilai = $request->nilai;
 
 
-        $i = 0;
         foreach ($pertanyaan as $prt) {
             FillingDetail::create([
                 'pengisian_id' => $pengisian->id,
                 'pertanyaan' => $prt->pertanyaan,
                 'kompetensi' => $prt->competence->aspek_kompetensi,
-                'nilai' => $nilai[$i]
+                'nilai' => $nilai[$prt->id]
             ]);
-
-            $i++;
-            if ($i == 2) {
-                break;
-            }
         }
+
+        return redirect('/mhs')->with('status','Terima kasih sudah mengisi.');
     }
 
-    public function statusMhs($nim, $thn_akd)
+
+    public function jmlMatkul($kls_id, $tak_id)
     {
+        return (int)DB::select(DB::raw("select count(id) from teaches where kelas_id=$kls_id and tahun_akademik_id=$tak_id"));
+    }
+
+    public function statusMhs($nim, $thn, $ganjil_genap)
+    {
+        $thn = implode('/',explode('-', $thn));
+        $thn_akd = AcademicYear::where([
+            'tahun' => $thn,
+            'ganjil_genap' => $ganjil_genap
+        ])->first()->id;
+
         //18a31/2019
-        $mhs_id = Student::where('nim',$nim)->first()->id;
+        $mhs = Student::where('nim',$nim)->first();
 
         $data = DB::table('fillings')
         ->join('teaches','fillings.mengajar_id','=','teaches.id')
-        ->select('fillings.*','teaches.tahun')
+        ->join('academic_years','teaches.tahun_akademik_id','academic_years.id')
+        ->select('fillings.*','academic_years.tahun', 'academic_years.ganjil_genap')
         ->where([
-            ['fillings.mahasiswa_id','=',$mhs_id],
-            ['teaches.tahun','=',$thn_akd]
+            ['fillings.mahasiswa_id','=',$mhs->id],
+            ['teaches.tahun_akademik_id','=',$thn_akd]
         ])
         ->get();
 
 
-        if($data->count() < 10){
+        if($data->count() < $this->jmlMatkul($mhs->kelas_id, $thn_akd)){
             $data = [
                 'statusPengisian' => 'belum selesai'
             ];

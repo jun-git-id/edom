@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Custom\CustomFunction;
+use App\Lecturer;
+use App\MajorChief;
 use App\Teach;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use PDF;
 
 class PdfController extends Controller
@@ -35,6 +39,7 @@ class PdfController extends Controller
 
 
         foreach ($data['dosen'] as $dt) {
+            $dt->nilaiPersen = CustomFunction::toPersen($dt->nilai);
             $dt->keterangan = CustomFunction::ambilKesimpulan($dt->nilai);
         }
 
@@ -42,8 +47,37 @@ class PdfController extends Controller
         $data['ket'] = CustomFunction::getNilaiAkhir($data['dosen']);
 
         //return view('admin.hasil-evaluasi.dosen.prodi-pdf', $data);
-        $pdf = PDF::loadView('admin.hasil-evaluasi.dosen.prodi-pdf', $data);
-        return $pdf->stream('prodi.pdf');
+
+        if($request->get('grafik', 'no') == 'yes'){
+            //dd($data['dosen']);
+            $data['url'] = CustomFunction::pdfGrafik($data['dosen'], 'nama', 'Prodi ' . $data['prodi'] . ' ' . $data['thn_ak']);
+            $data['title'] = 'Hasil Evaluasi Dosen';
+            $data['info1'] = [
+                [
+                    'name' => 'Prodi',
+                    'value' => $data['prodi']
+                ],
+                [
+                    'name' => 'Tahun Akademik',
+                    'value' => $data['thn_ak']
+                ],
+            ];
+            $data['info2'] = [
+                [
+                    'name' => 'Rata - rata',
+                    'value' => $data['ket']['rata2']
+                ],
+                [
+                    'name' => 'Keterangan',
+                    'value' => $data['ket']['kesimpulan']
+                ],
+            ];
+            $pdf = PDF::loadView('grafik.pdf2', $data);
+        }else{
+            $pdf = PDF::loadView('admin.hasil-evaluasi.dosen.prodi-pdf', $data);
+        }
+
+        return $pdf->stream('Prodi ' . $data['prodi'] . '.pdf');
 
     }
     //dosen-kelas
@@ -52,8 +86,8 @@ class PdfController extends Controller
         $tahun_akademik_id = $request->get('tahun_id', $tahun_akademik_id = CustomFunction::ambilLastTahunAc());
         $data['thn_ak'] = CustomFunction::getTak($tahun_akademik_id);
 
-
-        $data['dosen'] = DB::table('lecturers')->where('id', $dosen_id)->first();
+        $data['dosen'] = Lecturer::find($dosen_id);
+        $data['kajur'] = MajorChief::where('jurusan_id', $data['dosen']->study_program->jurusan_id)->first();
         $data['ajaran'] = DB::select(DB::raw("
         select
             te.id, pro.nama_prodi, kls.huruf, kls.angkatan, mk.nama_mk, count(distinct fill.mahasiswa_id) as jml_responden, avg(filld.nilai) as nilai
@@ -72,6 +106,7 @@ class PdfController extends Controller
 
 
         foreach ($data['ajaran'] as $dt) {
+            $dt->nilaiPersen = CustomFunction::toPersen($dt->nilai);
             $dt->kelas = CustomFunction::generateKelas($dt->nama_prodi, $dt->huruf, $dt->angkatan);
             $dt->keterangan = CustomFunction::ambilKesimpulan($dt->nilai);
         }
@@ -79,8 +114,47 @@ class PdfController extends Controller
         $data['ket'] = CustomFunction::getNilaiAkhir($data['ajaran']);
 
 
-        return view('admin.hasil-evaluasi.dosen.dosen-pdf', $data);
+
+        //return view('admin.hasil-evaluasi.dosen.dosen-pdf', $data);
         //return response()->json($data);
+
+        if($request->get('grafik', 'no') == 'yes'){
+            $data['url'] = CustomFunction::pdfGrafik($data['ajaran'], 'kelas', 'Dosen ' . $data['dosen']->nama . ' ' . $data['thn_ak']);
+            $data['title'] = 'Hasil Evaluasi Dosen';
+            $data['info1'] = [
+                [
+                    'name' => 'Nomor Induk',
+                    'value' => $data['dosen']->nomor_induk
+                ],
+                [
+                    'name' => 'Nama Dosen',
+                    'value' => $data['dosen']->nama
+                ],
+                [
+                    'name' => 'Tahun Akademik',
+                    'value' => $data['thn_ak']
+                ],
+            ];
+            $data['info2'] = [
+                [
+                    'name' => 'Rata - rata',
+                    'value' => $data['ket']['rata2']
+                ],
+                [
+                    'name' => 'Keterangan',
+                    'value' => $data['ket']['kesimpulan']
+                ],
+            ];
+            $pdf = PDF::loadView('grafik.pdf2', $data);
+        }else{
+            $pdf = PDF::loadView('admin.hasil-evaluasi.dosen.dosen-pdf', $data);
+        }
+
+
+        return $pdf->stream('Dosen ' . $data['dosen']->nama . '.pdf');
+
+
+
     }
     //dosen-pert
     public function dosenDosenPert(Request $request, $dosen_id)
@@ -127,12 +201,48 @@ class PdfController extends Controller
         }
 
         foreach ($data['pertanyaan'] as $dt) {
+            $dt->nilaiPersen = CustomFunction::toPersen($dt->nilai);
             $dt->keterangan = CustomFunction::ambilKesimpulan($dt->nilai);
         }
 
         $data['ket'] = CustomFunction::getNilaiAkhir($data['pertanyaan']);
         //return response()->json($data);
-        return view('admin.hasil-evaluasi.dosen.dosen_pert-pdf', $data);
+        //return view('admin.hasil-evaluasi.dosen.dosen_pert-pdf', $data);
+
+
+        if($request->get('grafik', 'no') == 'yes'){
+            $data['url'] = CustomFunction::pdfGrafik($data['pertanyaan'], 'pertanyaan', 'Dosen ' . $data['dosen']->nama . ' ' . $data['thn_ak']);
+            $data['title'] = 'Hasil Evaluasi Dosen';
+            $data['info1'] = [
+                [
+                    'name' => 'Nomor Induk',
+                    'value' => $data['dosen']->nomor_induk
+                ],
+                [
+                    'name' => 'Nama Dosen',
+                    'value' => $data['dosen']->nama
+                ],
+                [
+                    'name' => 'Tahun Akademik',
+                    'value' => $data['thn_ak']
+                ],
+            ];
+            $data['info2'] = [
+                [
+                    'name' => 'Rata - rata',
+                    'value' => $data['ket']['rata2']
+                ],
+                [
+                    'name' => 'Keterangan',
+                    'value' => $data['ket']['kesimpulan']
+                ],
+            ];
+            $pdf = PDF::loadView('grafik.pdf2', $data);
+        }else{
+            $pdf = PDF::loadView('admin.hasil-evaluasi.dosen.dosen_pert-pdf', $data);
+        }
+
+        return $pdf->stream('Dosen ' . $data['dosen']->nama . '.pdf');
     }
     //ajaran
     public function dosenAjaran(Request $request, $ajaran_id)
@@ -181,6 +291,7 @@ class PdfController extends Controller
         }
 
         foreach ($data['pertanyaan'] as $dt) {
+            $dt->nilaiPersen = CustomFunction::toPersen($dt->nilai);
             $dt->keterangan = CustomFunction::ambilKesimpulan($dt->nilai);
         }
 
@@ -188,12 +299,225 @@ class PdfController extends Controller
         $data['ket'] = CustomFunction::getNilaiAkhir($data['pertanyaan']);
 
         //return response()->json($data);
-        return view('admin.hasil-evaluasi.dosen.ajaran-pdf', $data);
+        //return view('admin.hasil-evaluasi.dosen.ajaran-pdf', $data);
+
+        if($request->get('grafik', 'no') == 'yes'){
+            $data['url'] = CustomFunction::pdfGrafik($data['pertanyaan'], 'pertanyaan', 'Dosen ' . $data['info']['nama_dosen'] . ' pada Kelas ' . $data['info']['kelas']. ' ' . $data['info']['thn_ak']);
+            $data['title'] = 'Hasil Evaluasi Dosen';
+            $data['info1'] = [
+                [
+                    'name' => 'Nomor Induk',
+                    'value' => $data['info']['nomor_induk']
+                ],
+                [
+                    'name' => 'Nama Dosen',
+                    'value' => $data['info']['nama_dosen']
+                ],
+                [
+                    'name' => 'Mata Kuliah',
+                    'value' => $data['info']['matkul']
+                ],
+                [
+                    'name' => 'Kelas',
+                    'value' => $data['info']['kelas']
+                ],
+                [
+                    'name' => 'Jumlah Responden',
+                    'value' => $data['info']['jml_responden']
+                ],
+                [
+                    'name' => 'Tahun Ajaran',
+                    'value' => $data['info']['thn_ak']
+                ],
+            ];
+            $data['info2'] = [
+                [
+                    'name' => 'Rata - rata',
+                    'value' => $data['ket']['rata2']
+                ],
+                [
+                    'name' => 'Keterangan',
+                    'value' => $data['ket']['kesimpulan']
+                ],
+            ];
+            $pdf = PDF::loadView('grafik.pdf2', $data);
+        }else{
+            $pdf = PDF::loadView('admin.hasil-evaluasi.dosen.ajaran-pdf', $data);
+        }
+
+        return $pdf->stream('Dosen '.$data['info']['nama_dosen'].' ' . $data['info']['kelas'].'.pdf');
 
     }
-
-
     ########JURUSAN
+
+
+
+
+
+    //dosen-kelas
+    public function dosenDosenKelas2(Request $request)
+    {
+        $dosen_id = Auth::user()->lecturer->id;
+        $tahun_akademik_id = $request->get('tahun_id', $tahun_akademik_id = CustomFunction::ambilLastTahunAc());
+        $data['thn_ak'] = CustomFunction::getTak($tahun_akademik_id);
+
+        $data['dosen'] = DB::table('lecturers')->where('id', $dosen_id)->first();
+        $data['ajaran'] = DB::select(DB::raw("
+        select
+            te.id, pro.nama_prodi, kls.huruf, kls.angkatan, mk.nama_mk, count(distinct fill.mahasiswa_id) as jml_responden, avg(filld.nilai) as nilai
+        from
+            courses mk, study_programs pro, classes kls, teaches te, fillings fill, filling_details filld
+        where
+            filld.pengisian_id = fill.id
+            and fill.mengajar_id = te.id
+            and te.kelas_id = kls.id
+            and kls.prodi_id = pro.id
+            and te.mata_kuliah_id = mk.id
+            and te.dosen_id = $dosen_id
+            and te.tahun_akademik_id = $tahun_akademik_id
+        group by te.id
+        "));
+
+
+        foreach ($data['ajaran'] as $dt) {
+            $dt->nilaiPersen = CustomFunction::toPersen($dt->nilai);
+            $dt->kelas = CustomFunction::generateKelas($dt->nama_prodi, $dt->huruf, $dt->angkatan);
+            $dt->keterangan = CustomFunction::ambilKesimpulan($dt->nilai);
+        }
+
+        $data['ket'] = CustomFunction::getNilaiAkhir($data['ajaran']);
+
+
+        //return view('admin.hasil-evaluasi.dosen.dosen-pdf', $data);
+        //return response()->json($data);
+
+        if($request->get('grafik', 'no') == 'yes'){
+            $data['url'] = CustomFunction::pdfGrafik($data['ajaran'], 'kelas', 'Dosen ' . $data['dosen']->nama . ' ' . $data['thn_ak']);
+            $data['title'] = 'Hasil Evaluasi Dosen';
+            $data['info1'] = [
+                [
+                    'name' => 'Nomor Induk',
+                    'value' => $data['dosen']->nomor_induk
+                ],
+                [
+                    'name' => 'Nama Dosen',
+                    'value' => $data['dosen']->nama
+                ],
+                [
+                    'name' => 'Tahun Akademik',
+                    'value' => $data['thn_ak']
+                ],
+            ];
+            $data['info2'] = [
+                [
+                    'name' => 'Rata - rata',
+                    'value' => $data['ket']['rata2']
+                ],
+                [
+                    'name' => 'Keterangan',
+                    'value' => $data['ket']['kesimpulan']
+                ],
+            ];
+            $pdf = PDF::loadView('grafik.pdf2', $data);
+        }else{
+            $pdf = PDF::loadView('admin.hasil-evaluasi.dosen.dosen-pdf', $data);
+        }
+
+
+        return $pdf->stream('Dosen ' . $data['dosen']->nama . '.pdf');
+
+
+
+    }//dosen-pert
+    public function dosenDosenPert2(Request $request)
+    {
+        $dosen_id = Auth::user()->lecturer->id;
+        $tahun_akademik_id = $request->get('tahun_id', $tahun_akademik_id = CustomFunction::ambilLastTahunAc());
+        $data['thn_ak'] = CustomFunction::getTak($tahun_akademik_id);
+
+        $data['dosen'] = DB::table('lecturers')->where('id', $dosen_id)->first();
+
+        $kompetensi = DB::select(DB::raw("
+        SELECT
+            filld.kompetensi
+        FROM
+            teaches te,
+            fillings fill,
+            filling_details filld
+        WHERE
+            filld.pengisian_id = fill.id
+            AND fill.mengajar_id = te.id
+            and te.tahun_akademik_id = $tahun_akademik_id
+            and te.dosen_id = $dosen_id
+        GROUP BY filld.kompetensi
+        "));
+
+        $data['pertanyaan'] = [];
+        foreach ($kompetensi as $kmp) {
+            $pertanyaan = DB::select(DB::raw("
+            SELECT
+                filld.pertanyaan, filld.kompetensi, avg(filld.nilai) as nilai
+            FROM
+                teaches te, fillings fill, filling_details filld
+            WHERE
+                filld.pengisian_id = fill.id
+                and fill.mengajar_id = te.id
+                and te.tahun_akademik_id = $tahun_akademik_id
+                and te.dosen_id = $dosen_id
+                and filld.kompetensi = '$kmp->kompetensi'
+            GROUP BY filld.pertanyaan
+            "));
+
+            foreach ($pertanyaan as $prt) {
+                $data['pertanyaan'][] = $prt;
+            }
+        }
+
+        foreach ($data['pertanyaan'] as $dt) {
+            $dt->nilaiPersen = CustomFunction::toPersen($dt->nilai);
+            $dt->keterangan = CustomFunction::ambilKesimpulan($dt->nilai);
+        }
+
+        $data['ket'] = CustomFunction::getNilaiAkhir($data['pertanyaan']);
+        //return response()->json($data);
+        //return view('admin.hasil-evaluasi.dosen.dosen_pert-pdf', $data);
+
+
+        if($request->get('grafik', 'no') == 'yes'){
+            $data['url'] = CustomFunction::pdfGrafik($data['pertanyaan'], 'pertanyaan', 'Dosen ' . $data['dosen']->nama . ' ' . $data['thn_ak']);
+            $data['title'] = 'Hasil Evaluasi Dosen';
+            $data['info1'] = [
+                [
+                    'name' => 'Nomor Induk',
+                    'value' => $data['dosen']->nomor_induk
+                ],
+                [
+                    'name' => 'Nama Dosen',
+                    'value' => $data['dosen']->nama
+                ],
+                [
+                    'name' => 'Tahun Akademik',
+                    'value' => $data['thn_ak']
+                ],
+            ];
+            $data['info2'] = [
+                [
+                    'name' => 'Rata - rata',
+                    'value' => $data['ket']['rata2']
+                ],
+                [
+                    'name' => 'Keterangan',
+                    'value' => $data['ket']['kesimpulan']
+                ],
+            ];
+            $pdf = PDF::loadView('grafik.pdf2', $data);
+        }else{
+            $pdf = PDF::loadView('admin.hasil-evaluasi.dosen.dosen_pert-pdf', $data);
+        }
+
+        return $pdf->stream('Dosen ' . $data['dosen']->nama . '.pdf');
+    }
+
 
 
 

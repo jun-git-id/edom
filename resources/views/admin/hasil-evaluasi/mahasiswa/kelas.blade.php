@@ -56,6 +56,14 @@
 
             </tbody>
         </table>
+        <div id="preloader">
+            <br><br>
+            <div class="text-center">
+                <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
 
 
         <br>
@@ -84,6 +92,7 @@
 
         tampilTahunAk(url_ambil_thn);
         $('#tampilkan-btn').click(e => {
+            $('#preloader').css('display', '');
             e.preventDefault();
 
 
@@ -93,6 +102,7 @@
             $.get(url2, data => {
                 //$('#mahasiswa').text('');
                 //tampilData(data);
+                $('#preloader').css('display', 'none');
                 console.log(url2);
             });
 
@@ -101,6 +111,7 @@
 
 
         $.get(url, data => {
+            $('#preloader').css('display', 'none');
             tampilData(data);
         });
 
@@ -114,7 +125,7 @@
                     <td>${i}</td>
                     <td>${dt.nim}</td>
                     <td>${dt.nama}</td>
-                    <td>${dt.nilai}</td>
+                    <td>${ toPersen(dt.nilai) }</td>
                     <td>${ambilKesimpulan(dt.nilai)}</td>
                     <td> <a href="<?= url('/admin/hasil-evaluasi/mhs/mhs/${dt.id}') ?>"><i class="fas fa-search-plus" ></i></a> </td>
                 </tr>`;

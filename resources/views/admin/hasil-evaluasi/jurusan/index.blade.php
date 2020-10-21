@@ -14,8 +14,7 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Hasil Evaluasi Jurusan</h1>
     <div>
-        <a href="/chart" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"><i class="fas fa-chart-bar fa-sm text-white-50"></i> Tampilan Grafik</a>
-        <a href="<?= url('/pdf/table') ?>" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-file-pdf fa-sm text-white-50"></i> Export to pdf</a>
+
     </div>
 
 </div>
@@ -26,12 +25,11 @@
             <div class="form-inline">
                 <div class="form-group">
                     <label class=" mr-2" for="name">Tahun Akademik : </label>
-                    <select name="" id="" class="form-control">
-                        <option value="">2017 - 1</option>
-                        <option value="">2017 - 2</option>
+                    <select name="" class="form-control" id="tahun_akademik">
+
                     </select>
                 </div>
-                <button class=" ml-2 btn btn-primary">Tampilkan</button>
+                <button id="tampilkan-btn" class=" ml-2 btn btn-primary">Tampilkan</button>
             </div>
         </form>
     </div>
@@ -52,6 +50,14 @@
             <tbody id="jurusan">
             </tbody>
         </table>
+        <div id="preloader">
+            <br><br>
+            <div class="text-center">
+                <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
 
 
         <br>
@@ -74,7 +80,32 @@
 <script>
     const url = "<?= url('/api/admin/hasil-evaluasi/jurusan/jurusan') ?>";
 
+    const url_ambil_thn = "<?= url('/api/get-thn_ak') ?>";
+
+    tampilTahunAk(url_ambil_thn);
+    $('#tampilkan-btn').click(e => {
+        e.preventDefault();
+        $('#info').text('');
+        $('#jurusan').text('');
+        //$('#rata2').text('');
+        //$('#preloader').css('display', '');
+        $('#preloader').css('display', '');
+
+
+
+        const thn_id = $('#tahun_akademik').find(":selected").attr('value');
+        const url2 = `<?= url('/api/admin/hasil-evaluasi/jurusan/jurusan?tahun_id=${thn_id}') ?>`;
+        $.get(url2, data => {
+            $('#preloader').css('display', 'none');
+            //$('#preloader').css('display', 'none');
+            tampilData(data);
+            console.log(data);
+        });
+
+    });
+
     $.get(url, data => {
+        $('#preloader').css('display', 'none');
         tampilData(data);
     });
 
@@ -86,7 +117,7 @@
             const el = `<tr>
                         <td>${i}</td>
                         <td>${dt.nama_jurusan}</td>
-                        <td>${dt.nilai}</td>
+                        <td>${ toPersen(dt.nilai) }</td>
                         <td>${dt.keterangan}</td>
                         <td> <a href="<?= url('/admin/hasil-evaluasi/jurusan/jurusan/${dt.id}') ?>"><i class="fas fa-search-plus" ></i></a> </td>
                     </tr>`;

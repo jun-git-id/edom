@@ -13,12 +13,12 @@
 use Illuminate\Support\Facades\DB;
 
 Route::group(['prefix' => 'mhs'], function ($router) {
-    Route::get('/daftar-dosen', 'MahasiswaController@daftarDosen');
+    Route::get('/daftar-dosen/{mhs_id}', 'MahasiswaController@daftarDosen');
     Route::get('/isi-kuisioner/{mengajar_id}', 'MahasiswaController@kuisioner');
     Route::post('/insert-kuisioner', 'MahasiswaController@insertKuisioner');
 });
 
-Route::get('/cek-mhs/{nim}/{thn_akd}', 'MahasiswaController@statusMhs');
+Route::get('/cek-mhs/{nim}/{thn}/{ganjil_genap}', 'MahasiswaController@statusMhs');
 
 
 //TES
@@ -34,11 +34,22 @@ Route::get('get-thn_ak', function () {
 
 });
 
+//TAHUN AKADEMIK BAGIKAN
+Route::get('get-thn_ak-bag', function () {
+    $data = DB::table('shares')
+    ->join('academic_years', 'shares.tahun_akademik_id', 'academic_years.id')
+    ->select('academic_years.*')
+    ->get();
+    return response()->json($data);
+
+});
+
 //NAVIGASI
 Route::get('ambil-jurusan', 'NavController@getJurusan');
 Route::get('ambil-prodi/{jurusan_id}', 'NavController@getProdi');
 Route::get('ambil-angkatan/{prodi_id}', 'NavController@getAngkatan');
 Route::get('ambil-kelas/{prodi_id}/{angkatan}', 'NavController@getKelas');
+Route::get('ambil-dosen/{prodi_id}', 'NavController@getDosen');
 
 //##HASIL EVALUASI
 Route::group(['prefix' => 'admin/hasil-evaluasi'], function () {
@@ -79,15 +90,23 @@ Route::group(['prefix' => 'admin/hasil-evaluasi'], function () {
 
 });
 
-
 //Grafik Tahunan
 Route::group(['prefix' => 'admin/grafik-tahunan'], function () {
-    Route::get('keseluruhan', 'HasilEvaluasiGrafikTahunan@keseluruhan'); //keseluruhan
-    Route::get('jurusan/{jurusan_id}', 'HasilEvaluasiGrafikTahunan@jurusan'); //jurusan
-    Route::get('prodi/{prodi_id}', 'HasilEvaluasiGrafikTahunan@prodi'); //prodi
-    Route::get('dosen/{dosen_id}', 'HasilEvaluasiGrafikTahunan@dosen'); //dosen
+    Route::get('keseluruhan', 'GrafikTahunanController@keseluruhan'); //keseluruhan
+    Route::get('jurusan/{jurusan_id}', 'GrafikTahunanController@jurusan'); //jurusan
+    Route::get('prodi/{prodi_id}', 'GrafikTahunanController@prodi'); //prodi
+    Route::get('dosen/{dosen_id}', 'GrafikTahunanController@dosen'); //dosen
 
 });
+
+Route::group(['prefix' => 'kajur/grafik-tahunan'], function () {
+    Route::get('jurusan/{jurusan_id}', 'GrafikTahunanController@jurusanKajur'); //jurusan
+    Route::get('prodi/{prodi_id}', 'GrafikTahunanController@prodiKajur'); //prodi
+    Route::get('dosen/{dosen_id}', 'GrafikTahunanController@dosenKajur'); //dosen
+
+});
+
+Route::get('dosen/grafik-tahunan/{dosen_id}', 'GrafikTahunanController@dosenDosen'); //dosen
 
 
 

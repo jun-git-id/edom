@@ -54,4 +54,12 @@ class NavController extends Controller
 
         return response()->json($data);
     }
+
+    public function getDosen($prodi_id)
+    {
+        $data['prodi'] = DB::table('study_programs')->where('id',$prodi_id)->first();
+        $data['dosen'] = DB::table('lecturers')->where('prodi_id', $prodi_id)->get();
+
+        return response()->json($data);
+    }
 }

@@ -16,5 +16,9 @@ class PembagianSeeder extends Seeder
             'tanggal' => '2019-07-18 12:00:00',
             'tahun_akademik_id' => '1'
         ]);
+        DB::table('shares')->insert([
+            'tanggal' => '2019-07-18 12:00:00',
+            'tahun_akademik_id' => '2'
+        ]);
     }
 }

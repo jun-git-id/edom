@@ -65,22 +65,37 @@
             <!-- Nav Item - Utilities Collapse Menu -->
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKelolaData" aria-expanded="true" aria-controls="collapseKelolaData">
+                    <i class="fas fa-fw fa-database"></i>
+                    <span>Kelola Data</span>
+                </a>
+                <div id="collapseKelolaData" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="<?= url('/admin/kelola-data/jurusan') ?>">Jurusan</a>
+                        <a class="collapse-item" href="<?= url('/admin/kelola-data/prodi') ?>">Prodi</a>
+                        <a class="collapse-item" href="<?= url('/admin/kelola-data/tahun-akademik') ?>">Tahun Akademik</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLihatData" aria-expanded="true" aria-controls="collapseLihatData">
                     <i class="fas fa-fw fa-database"></i>
                     <span>Lihat Data</span>
                 </a>
                 <div id="collapseLihatData" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="<?= url('/admin/lihat-data/mahasiswa') ?>">Mahasiswa</a>
-                        <a class="collapse-item" href="<?= url('/admin/lihat-data/dosen') ?>">Dosen</a>
                         <a class="collapse-item" href="<?= url('/admin/lihat-data/matkul') ?>">Mata Kuliah</a>
+                        <a class="collapse-item" href="<?= url('/admin/lihat-data/dosen') ?>">Dosen</a>
+                        <a class="collapse-item" href="<?= url('/admin/lihat-data/mahasiswa') ?>">Mahasiswa</a>
+                        <a class="collapse-item" href="<?= url('/admin/lihat-data/ajaran') ?>">Ajaran</a>
                     </div>
                 </div>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKuisioner" aria-expanded="true" aria-controls="collapseKuisioner">
                     <i class="fas fa-fw fa-sticky-note"></i>
-                    <span>Kuisioner</span>
+                    <span>Kelola Kuisioner</span>
                 </a>
                 <div id="collapseKuisioner" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -91,9 +106,19 @@
             </li>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseImportData" aria-expanded="true" aria-controls="collapseImportData">
                     <i class="fas fa-fw fa-arrow-circle-left"></i>
                     <span>Import Data</span></a>
+                </a>
+                <div id="collapseImportData" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="<?= url('/admin/import-data/matkul') ?>">Mata Kuliah</a>
+                        <a class="collapse-item" href="<?= url('/admin/import-data/dosen') ?>">Dosen</a>
+                        <a class="collapse-item" href="<?= url('/admin/import-data/mhs') ?>">Mahasiswa</a>
+                        <a class="collapse-item" href="<?= url('/admin/import-data/mhs-nonaktif') ?>">Mahasiswa Nonaktif</a>
+                        <a class="collapse-item" href="<?= url('/admin/import-data/pengajaran') ?>">Pengajaran</a>
+                    </div>
+                </div>
             </li>
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
@@ -110,11 +135,33 @@
                     </div>
                 </div>
             </li>
+
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGrafikTahunan" aria-expanded="true" aria-controls="collapseGrafikTahunan">
                     <i class="fas fa-fw fa-chart-line"></i>
-                    <span>Grafik Tahunan</span></a>
+                    <span>Grafik Tahunan</span>
+                </a>
+                <div id="collapseGrafikTahunan" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="<?= url('/admin/grafik-tahunan/keseluruhan') ?>">Keseluruhan</a>
+                        <a class="collapse-item" href="<?= url('/admin/grafik-tahunan/jurusan') ?>">Jurusan</a>
+                        <a class="collapse-item" href="<?= url('/admin/grafik-tahunan/prodi') ?>">Prodi</a>
+                        <a class="collapse-item" href="<?= url('/admin/grafik-tahunan/dosen') ?>">Dosen</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKelolaAkun" aria-expanded="true" aria-controls="collapseKelolaAkun">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Kelola Akun</span>
+                </a>
+                <div id="collapseKelolaAkun" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="<?= url('/admin/kelola-akun/admin') ?>">Admin</a>
+                        <a class="collapse-item" href="<?= url('/admin/kelola-akun/kajur') ?>">Kajur</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->
@@ -166,16 +213,8 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    @yield('search')
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -310,7 +349,7 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->admin->nama }}</span>
                                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -319,19 +358,25 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
+
+                                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#ubahPasswordModal">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
+                                    Ubah Password
                                 </a>
+
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
                             </div>
                         </li>
 
@@ -341,6 +386,9 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
+
+                @include('layouts.password-error')
+                @include('layouts.ganti-password-modal')
                 <div class="container-fluid">
 
                     @yield('content')

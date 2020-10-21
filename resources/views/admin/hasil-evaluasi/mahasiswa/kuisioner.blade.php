@@ -45,6 +45,14 @@
 
             </tbody>
         </table>
+        <div id="preloader">
+            <br><br>
+            <div class="text-center">
+                <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
 
 
         <br>
@@ -75,6 +83,7 @@
     const url = "<?= url('/api/admin/hasil-evaluasi/mhs/kuisioner/'. $pengisian_id) ?>";
 
     $.get(url, data => {
+        $('#preloader').css('display', 'none');
         tampilData(data);
     });
 
@@ -96,7 +105,7 @@
                             <td>${i}</td>
                             <td>${dt.pertanyaan}</td>
                             <td>${dt.kompetensi}</td>
-                            <td>${dt.nilai}</td>
+                            <td>${ dt.nilai }</td>
                         </tr>`;
             $('#pertanyaan').append(el);
 

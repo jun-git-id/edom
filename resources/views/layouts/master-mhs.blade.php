@@ -282,7 +282,7 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->student->nama }}</span>
                                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -291,19 +291,23 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#ubahPasswordModal">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
+                                    Ubah Password
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
                             </div>
                         </li>
 
@@ -313,6 +317,8 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
+                @include('layouts.password-error')
+                @include('layouts.ganti-password-modal')
                 <div class="container-fluid">
 
                     @yield('content')
@@ -363,6 +369,8 @@
         </div>
     </div>
 
+    @include('layouts.ganti-password-modal');
+
     <!-- Bootstrap core JavaScript-->
     <script src="<?= url('/template-admin/vendor/jquery/jquery.min.js') ?>"></script>
     <script src="<?= url('/template-admin/vendor/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
@@ -372,6 +380,9 @@
 
     <!-- Custom scripts for all pages-->
     <script src="<?= url('/template-admin/js/sb-admin-2.min.js') ?>"></script>
+    <script src="<?= url('/js/script.js') ?>"></script>
+
+    @stack('script')
 
 </body>
 

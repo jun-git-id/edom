@@ -4,6 +4,8 @@ namespace App\Custom;
 
 use App\AcademicYear;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use PDF;
 
 class CustomFunction
 {
@@ -61,7 +63,7 @@ class CustomFunction
         $kesimpulan = CustomFunction::ambilKesimpulan($rata2);
 
         return [
-            'rata2' => $rata2,
+            'rata2' => CustomFunction::toPersen($rata2),
             'kesimpulan' => $kesimpulan
         ];
     }
@@ -108,6 +110,146 @@ class CustomFunction
                 ]);
             }
         }
+    }
+
+    public static function toPersen($nilai)
+    {
+        $nilai = (string)$nilai*25;
+        $nilai = substr($nilai,0,5);
+        $nilai = $nilai . '%';
+
+        return $nilai;
+    }
+
+    public static function toPersenGrafik($nilai)
+    {
+        $nilai = (string)$nilai*25;
+        $nilai = substr($nilai,0,5);
+        $nilai = (float)$nilai;
+
+        return $nilai;
+    }
+
+    public static function pdfGrafik($data, $label_name, $title)
+    {
+        $label_gr = [];
+        $data_gr = [];
+
+        foreach($data as $dt){
+            $label_gr[] = $dt->$label_name;
+            $data_gr[] = CustomFunction::toPersenGrafik($dt->nilai);
+        }
+
+
+
+        $label_gr =  implode("','",$label_gr);
+        $data_gr = implode(',',$data_gr);
+
+
+
+        //return $arr2_im;
+
+        $response = Http::post('https://quickchart.io/chart/create', [
+
+            'chart' => "{
+                type: 'bar',
+                data: {
+                  labels: ['".$label_gr."'],
+                  datasets: [
+                    {
+                      label: 'Nilai',
+                      data: [".$data_gr."],
+                      backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                      borderColor: 'rgb(54, 162, 235)',
+                      borderWidth: 1,
+                    },
+                  ],
+                },
+                options: {
+                  title: {
+                    display: true,
+                    text: '".$title."',
+                  },
+                  plugins: {
+                    datalabels: {
+                      anchor: 'center',
+                      align: 'center',
+                      color: '#fff',
+                      font: {
+                        weight: 'bold',
+                      },
+                    },
+                  },
+                },
+              }"
+        ]);
+
+
+        return $response->json()['url'];
+
+
+    }
+    public static function pdfGrafikLine($data, $title)
+    {
+        $label_gr = [];
+        $data_gr = [];
+
+        foreach($data as $dt){
+            $label_gr[] = $dt->tahunFinal;
+            $data_gr[] = CustomFunction::toPersenGrafik($dt->nilai);
+        }
+
+
+
+        $label_gr =  implode("','",$label_gr);
+        $data_gr = implode(',',$data_gr);
+
+
+
+        //return $arr2_im;
+        //labels: ['".$label_gr."'],
+        //data: [".$data_gr."],
+        //text: '".$title."',
+
+        $response = Http::post('https://quickchart.io/chart/create', [
+
+            'chart' => "{
+                type: 'line',
+                data: {
+                    labels: ['".$label_gr."'],
+                  datasets: [
+                    {
+                        label: 'Nilai',
+                      fill: false,
+                      backgroundColor: 'rgb(54, 162, 235)',
+                      borderColor: 'rgb(54, 162, 235)',
+                      data: [".$data_gr."],
+                    },
+                  ],
+                },
+                options: {
+                  title: {
+                    display: true,
+                    text: '".$title."',
+                  },
+                    plugins: {
+                    datalabels: {
+                      anchor: 'center',
+                      align: 'center',
+                      color: '#000',
+                      font: {
+                        weight: 'bold',
+                      },
+                    },
+                  },
+                },
+              }"
+        ]);
+
+
+        return $response->json()['url'];
+
+
     }
 
 
