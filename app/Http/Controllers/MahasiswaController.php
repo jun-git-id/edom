@@ -22,8 +22,13 @@ class MahasiswaController extends Controller
 {
     public function index()
     {
+        $mhs = Auth::user()->student;
 
-        $mhs_id = Auth::user()->student->id;
+        if($mhs->aktif != 1){
+            return redirect('/mhs/tak-aktif');
+        }
+
+        $mhs_id = $mhs->id;
         return view('mhs.home', compact('mhs_id'));
     }
 
@@ -108,7 +113,7 @@ class MahasiswaController extends Controller
 
     public function insertKuisioner(Request $request)
     {
-        /* $mhs_id = Auth::user()->student->id;
+        $mhs_id = Auth::user()->student->id;
 
         //return response()->json($request->nilai);
 
@@ -133,7 +138,7 @@ class MahasiswaController extends Controller
                 'kompetensi' => $prt->competence->aspek_kompetensi,
                 'nilai' => $nilai[$prt->id]
             ]);
-        } */
+        }
 
         $mengajar = Teach::find($request->mengajar_id);
         $data = [

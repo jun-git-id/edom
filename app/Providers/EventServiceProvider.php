@@ -23,7 +23,6 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\MahasiswaInputEvent' => [
             'App\Listeners\DosenNotifListener',
-            'App\Listeners\AllNotifListener',
         ],
     ];
 

@@ -82,7 +82,7 @@
 
             <div class="form-group">
                 <label for="exampleFormControlTextarea1"><b>Komentar Anda : </b></label>
-                <textarea name="komentar" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea name="komentar" class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
             </div>
             <br><br>
 

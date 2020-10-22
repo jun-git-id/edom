@@ -489,6 +489,9 @@ Route::group([
     Route::get('/', 'MahasiswaController@index')->name('hal-mhs');
     Route::get('/isi/{ajaran_id}', 'MahasiswaController@kuisioner');
     Route::post('/store', 'MahasiswaController@insertKuisioner');
+    Route::get('tak-aktif', function () {
+        return view('mhs.tak-aktif');
+    });
 });
 
 
