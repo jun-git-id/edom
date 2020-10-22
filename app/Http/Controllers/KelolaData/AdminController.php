@@ -117,7 +117,9 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
+        $user_id = Admin::find($id)->user_id;
         Admin::destroy($id);
+        User::destroy($user_id);
 
         return redirect('/admin/kelola-akun/admin');
     }

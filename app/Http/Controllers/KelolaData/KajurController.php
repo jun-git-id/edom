@@ -148,7 +148,9 @@ class KajurController extends Controller
     public function destroy($id)
     {
 
+        $user_id = MajorChief::find($id)->user_id;
         MajorChief::destroy($id);
+        User::destroy($user_id);
 
         return redirect('/admin/kelola-akun/kajur');
     }

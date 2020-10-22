@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\AcademicYear;
 use App\Competence;
 use App\Custom\CustomFunction;
+use App\Events\MahasiswaInputEvent;
 use App\Filling;
 use App\FillingDetail;
 use App\Http\Resources\DaftarDosenResource;
@@ -80,7 +81,6 @@ class MahasiswaController extends Controller
     public function kuisioner(Request $request, $mengajar_id)
     {
         $mhs_id = Auth::user()->student->id;
-        $tahun_akademik_id = $request->get('tahun_id',$tahun_akademik_id = CustomFunction::ambilLastTahunAc());
 
         $ajaran = DB::select(Db::raw("
                 SELECT
@@ -94,7 +94,6 @@ class MahasiswaController extends Controller
             and te.mata_kuliah_id = mk.id
             and te.tahun_akademik_id = thn.id
             and te.id = $mengajar_id
-            and thn.id = $tahun_akademik_id;
         "))[0];
 
         $ajaran->kelas = CustomFunction::generateKelas($ajaran->nama_prodi, $ajaran->huruf, $ajaran->angkatan);
@@ -109,7 +108,7 @@ class MahasiswaController extends Controller
 
     public function insertKuisioner(Request $request)
     {
-        $mhs_id = Auth::user()->student->id;
+        /* $mhs_id = Auth::user()->student->id;
 
         //return response()->json($request->nilai);
 
@@ -134,7 +133,15 @@ class MahasiswaController extends Controller
                 'kompetensi' => $prt->competence->aspek_kompetensi,
                 'nilai' => $nilai[$prt->id]
             ]);
-        }
+        } */
+
+        $mengajar = Teach::find($request->mengajar_id);
+        $data = [
+            'dosen' => $mengajar->lecturer,
+            'tak_id' => $mengajar->tahun_akademik_id
+        ];
+
+        event(new MahasiswaInputEvent($data));
 
         return redirect('/mhs')->with('status','Terima kasih sudah mengisi.');
     }

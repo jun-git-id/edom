@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Competence;
 use App\Custom\CustomFunction;
 use App\Events\TesEvent;
+use App\Mail\AllNotifMail;
+use App\Mail\DosenNotifMail;
 use App\Mail\TesMail;
 use App\Question;
 use App\Role;
@@ -88,8 +90,10 @@ class TesController extends Controller
     public function kirimEmail()
     {
 
-        $data = 'data adfa faf adf';
-        Mail::to('badruakfm@gmail.com')->send(new TesMail($data));
+        $data = 'Korene Ayunda';
+        //Mail::to('badruakfm@gmail.com')->send(new TesMail($data));
+        //Mail::to('badruakfm@gmail.com')->send(new DosenNotifMail($data));
+        Mail::to('badruakfm@gmail.com')->send(new AllNotifMail());
     }
 
     public function pdf()

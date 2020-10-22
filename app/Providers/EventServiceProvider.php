@@ -21,6 +21,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\TesEvent' => [
             'App\Listeners\TesListener',
         ],
+        'App\Events\MahasiswaInputEvent' => [
+            'App\Listeners\DosenNotifListener',
+            'App\Listeners\AllNotifListener',
+        ],
     ];
 
     /**
