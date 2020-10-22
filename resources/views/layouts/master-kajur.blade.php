@@ -14,6 +14,7 @@
 
 
 
+    <link rel="shortcut icon" href="<?= url('/img/logoPNC-e1564459924774.png') ?>" type="image/x-icon">
     <!-- Custom fonts for this template-->
     <link href="<?= url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css') ?>" rel="stylesheet" type="text/css">
 
